@@ -7,7 +7,7 @@ strategie di optimization disponibili.
 
 import logging
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Dict, List, Optional
 
 from .adapters.base import LLMAdapter
 from .metrics import SemanticMetrics, TokenMetrics
@@ -203,7 +203,11 @@ class PromptOptimizer:
         target_reduction: Optional[float],
     ) -> bool:
         """Determines if una strategy dovrebbe essere applicata."""
-        # Logica for decidere if applicare la strategy
+        # Verifica prima se la strategia può essere applicata
+        if not strategy.can_apply(current_prompt):
+            return False
+
+        # Logica per decidere se applicare la strategy
         # basata su target di reduction, modalità aggressive, etc.
         return True
 

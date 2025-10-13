@@ -22,10 +22,13 @@ class ModelConfig:
     cost_per_1k_output_tokens: float
     tokenizer_name: Optional[str] = None
     special_tokens: Optional[Dict[str, str]] = None
+    custom_params: Optional[Dict[str, Any]] = None
 
     def __post_init__(self):
         if self.special_tokens is None:
             self.special_tokens = {}
+        if self.custom_params is None:
+            self.custom_params = {}
 
 
 class LLMAdapter(ABC):

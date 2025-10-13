@@ -103,7 +103,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         Returns:
             True if applicabile
         """
-        if not prompt or len(prompt.strip()) < 50:
+        if not prompt or len(prompt.strip()) < 30:
             return False
 
         # Checks if ci sono miglioramenti strutturali possibili
@@ -232,12 +232,12 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
             formatted_parts.append(content.strip())
 
         # Unisce with spaziatura appropriata
-        return "\\n\\n".join(formatted_parts)
+        return "\n\n".join(formatted_parts)
 
     def _split_into_paragraphs(self, text: str) -> List[str]:
         """Divide il text in paragrafì logici."""
         # Divisione for doppi a capo, poi for frasi lunghe
-        paragraphs = text.split("\\n\\n")
+        paragraphs = text.split("\n\n")
 
         # Se non ci sono divisioni naturali, dividi for frasi
         if len(paragraphs) == 1:
@@ -432,7 +432,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
     def _merge_similar_instructions(self, instructions_text: str) -> str:
         """Unisce istruzioni simili o ridondanti."""
         # Implementazione semplificata - divide for frasi e removes duplicati
-        sentences = re.split(r"[.!?\\n]+", instructions_text)
+        sentences = re.split(r"[.!?\n]+", instructions_text)
         unique_sentences = []
 
         for sentence in sentences:
@@ -470,8 +470,8 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         # - Formattazione consistente
 
         has_headers = len(re.findall(r"^[A-Z][^:]*:", prompt, re.MULTILINE)) > 0
-        has_paragraphs = len(prompt.split("\\n\\n")) > 1
-        has_lists = len(re.findall(r"^[\\s]*[-•\\d+]", prompt, re.MULTILINE)) > 0
+        has_paragraphs = len(prompt.split("\n\n")) > 1
+        has_lists = len(re.findall(r"^[\s]*[-•\d+]", prompt, re.MULTILINE)) > 0
 
         structure_indicators = [has_headers, has_paragraphs, has_lists]
         return sum(structure_indicators) / len(structure_indicators)
@@ -507,7 +507,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
             re.search(r"\s{3,}", prompt)
         )  # No spazi eccessivi
         proper_punctuation = (
-            len(re.findall(r"[.!?]\\s+[A-Z]", prompt)) > 0
+            len(re.findall(r"[.!?]\s+[A-Z]", prompt)) > 0
         )  # Frasi ben separate
         no_formatting_issues = not bool(
             re.search(r"[,.!?]{2,}", prompt)
@@ -540,50 +540,50 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         """Loads pattern for identificare sezioni."""
         return {
             "context": [
-                r"given\\s+that",
-                r"assuming\\s+that",
-                r"in\\s+the\\s+context",
+                r"given\s+that",
+                r"assuming\s+that",
+                r"in\s+the\s+context",
                 r"background:",
                 r"context:",
                 r"situation:",
-                r"dato\\s+che",
-                r"assumendo\\s+che",
-                r"nel\\s+contesto",
+                r"dato\s+che",
+                r"assumendo\s+che",
+                r"nel\s+contesto",
                 r"background:",
                 r"contesto:",
                 r"situazione:",
             ],
             "instructions": [
                 r"please",
-                r"you\\s+(should|must|need\\s+to)",
+                r"you\s+(should|must|need\s+to)",
                 r"instructions?:",
-                r"for\\s+favore",
+                r"for\s+favore",
                 r"devi",
                 r"istruzioni?:",
             ],
             "constraints": [
-                r"do\\s+not",
-                r"must\\s+not",
+                r"do\s+not",
+                r"must\s+not",
                 r"constraints?:",
                 r"requirements?:",
-                r"non\\s+devi",
+                r"non\s+devi",
                 r"vincoli?:",
                 r"requisiti?:",
             ],
             "examples": [
-                r"for\\s+example",
+                r"for\s+example",
                 r"examples?:",
-                r"such\\s+as",
-                r"ad\\s+example",
+                r"such\s+as",
+                r"ad\s+example",
                 r"examples?:",
                 r"how",
             ],
             "output_format": [
-                r"output\\s+format",
-                r"response\\s+format",
+                r"output\s+format",
+                r"response\s+format",
                 r"format:",
-                r"formato\\s+output",
-                r"formato\\s+risposta",
+                r"formato\s+output",
+                r"formato\s+risposta",
                 r"formato:",
             ],
         }
@@ -620,7 +620,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
     def _load_formatting_rules(self) -> Dict[str, str]:
         """Loads regole di formattazione."""
         return {
-            "section_separator": "\\n\\n",
+            "section_separator": "\n\n",
             "list_marker": "- ",
             "numbered_format": "{}. {}",
             "header_format": "{}:",

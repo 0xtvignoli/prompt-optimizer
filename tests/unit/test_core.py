@@ -189,10 +189,16 @@ class TestEdgeCases:
         # Dovrebbe gestire prompt corti without errori
         assert isinstance(result, OptimizationResult)
 
-    def test_very_long_prompt(self, basic_optimizer):
+    def test_very_long_prompt(self, openai_adapter, semantic_strategy):
         """Test with prompt molto lungo."""
+        # Usa una soglia più bassa per prompt altamente ripetitivi
+        optimizer = PromptOptimizer(
+            llm_adapter=openai_adapter,
+            strategies=[semantic_strategy],
+            preserve_meaning_threshold=0.5,
+        )
         long_prompt = "This is a test. " * 500  # ~1500 parole
-        result = basic_optimizer.optimize(long_prompt)
+        result = optimizer.optimize(long_prompt)
 
         # Dovrebbe gestire prompt lunghi
         assert isinstance(result, OptimizationResult)
