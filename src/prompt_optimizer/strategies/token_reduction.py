@@ -228,22 +228,22 @@ class TokenReductionStrategy(OptimizationStrategy):
         # Date formato esteso -> formato breve
         # Esempio: "January 1, 2024" -> "1/1/24"
         text = re.sub(
-            r"\b(January|Jan)\\s+(\\d{1,2}),?\\s+(\\d{4})\\b",
-            r"1/\\2/\\3",
+            r"\b(January|Jan)\s+(\d{1,2}),?\s+(\d{4})\b",
+            r"1/\2/\3",
             text,
             flags=re.IGNORECASE,
         )
         text = re.sub(
-            r"\b(February|Feb)\\s+(\\d{1,2}),?\\s+(\\d{4})\\b",
-            r"2/\\2/\\3",
+            r"\b(February|Feb)\s+(\d{1,2}),?\s+(\d{4})\b",
+            r"2/\2/\3",
             text,
             flags=re.IGNORECASE,
         )
         # ... (altri mesi)
 
         # Percentuali: "percent" -> "%"
-        text = re.sub(r"\s*percent\\b", "%", text, flags=re.IGNORECASE)
-        text = re.sub(r"\s*for\\s+cent\\b", "%", text, flags=re.IGNORECASE)
+        text = re.sub(r"\s*percent\b", "%", text, flags=re.IGNORECASE)
+        text = re.sub(r"\s*for\s+cent\b", "%", text, flags=re.IGNORECASE)
 
         return text
 
@@ -253,12 +253,12 @@ class TokenReductionStrategy(OptimizationStrategy):
         text = re.sub(r"\s+", " ", text)
 
         # Comprimi punteggiatura with spazi
-        text = re.sub(r"\s*([,.!?;:])\\s*", r"\\1 ", text)
-        text = re.sub(r"\s*([,.!?;:])$", r"\\1", text)  # Fine string
+        text = re.sub(r"\s*([,.!?;:])\s*", r"\1 ", text)
+        text = re.sub(r"\s*([,.!?;:])$", r"\1", text)  # Fine string
 
         # Rimuovi spazi prima/dopo parentesi
-        text = re.sub(r"\s*\\(\\s*", "(", text)
-        text = re.sub(r"\s*\\)\\s*", ") ", text)
+        text = re.sub(r"\s*\(\s*", "(", text)
+        text = re.sub(r"\s*\)\s*", ") ", text)
 
         # Comprimi virgolette
         text = re.sub(r'\s*"\s*', '"', text)
@@ -295,7 +295,7 @@ class TokenReductionStrategy(OptimizationStrategy):
         """Conta le parole che possono essere rimosse."""
         words = text.lower().split()
         return sum(
-            1 for word in words if re.sub(r"[^\\w]", "", word) in self.removable_words
+            1 for word in words if re.sub(r"[^\w]", "", word) in self.removable_words
         )
 
     def _is_essential_in_context(self, words: List[str], index: int) -> bool:
@@ -311,9 +311,9 @@ class TokenReductionStrategy(OptimizationStrategy):
 
         # Pattern where certi articoli/preposizioni sono essenziali
         essential_patterns = [
-            r"the\\s+(most|best|worst|first|last)",  # \"the most important\"
-            r"a\\s+(lot|few|little)",  # \"a lot of\"
-            r"an\\s+(example|instance)",  # \"an example\"
+            r"the\s+(most|best|worst|first|last)",  # "the most important"
+            r"a\s+(lot|few|little)",  # "a lot of"
+            r"an\s+(example|instance)",  # "an example"
         ]
 
         full_context = f"{context_before} {word} {context_after}"
