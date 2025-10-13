@@ -162,7 +162,7 @@ class TokenReductionStrategy(OptimizationStrategy):
         filtered_words = []
 
         for i, word in enumerate(words):
-            word_clean = re.sub(r"[^\\w]", "", word.lower())
+            word_clean = re.sub(r"[^\w]", "", word.lower())
 
             # Mantieni la parola if non è rimovibile o if è importante nel contesto
             if word_clean not in self.removable_words or self._is_essential_in_context(

@@ -128,7 +128,7 @@ class TokenMetrics:
             return len(text) // 4
         elif model_type.lower() == "llama":
             # LLaMA: tokenizzazione leggermente diversa
-            return len(text) // 3.5
+            return int(len(text) / 3.5)
         else:
             # Fallback generico
             return len(text.split())
@@ -323,7 +323,9 @@ class SemanticMetrics:
             vectors = self.vectorizer.fit_transform([text1, text2])
             similarity_matrix = cosine_similarity(vectors)
 
-            return float(similarity_matrix[0, 1])
+            # Clamp to [0, 1] to handle floating point precision issues
+            similarity = float(similarity_matrix[0, 1])
+            return max(0.0, min(similarity, 1.0))
 
         except Exception:
             # Fallback with similarity basata su parole
