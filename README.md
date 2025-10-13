@@ -1,25 +1,25 @@
 # 🚀 Prompt Optimizer
 
-**Ottimizza i tuoi prompt LLM per ridurre costi e migliorare performance**
+**Optimize your LLM prompts to reduce costs and improve performance**
 
-Prompt Optimizer è un pacchetto Python progettato per ottimizzare automaticamente i prompt per Large Language Models (LLM), riducendo il consumo di token mantenendo (o addirittura migliorando) la qualità semantica dell'output.
+Prompt Optimizer is a Python package designed to automatically optimize prompts for Large Language Models (LLM), reducing token consumption while maintaining (or even improving) the semantic quality of the output.
 
-## ✨ Caratteristiche Principali
+## ✨ Key Features
 
-- **🔍 Compressione Semantica**: Rimuove ridondanze mantenendo il significato
-- **💰 Riduzione Costi**: Minimizza i token per ridurre i costi delle API
-- **🎯 Ottimizzazioni Specifiche**: Adattatori per GPT, Claude e altri modelli
-- **📊 Metriche Dettagliate**: Tracking di token, similarità semantica e costi
-- **🔧 Strategie Modulari**: Sistema flessibile e personalizzabile
-- **🌍 Multilingua**: Supporto per italiano e inglese
+- **🔍 Semantic Compression**: Removes redundancy while preserving meaning
+- **💰 Cost Reduction**: Minimizes tokens to reduce API costs
+- **🎯 Specific Optimizations**: Adapters for GPT, Claude and other models
+- **📊 Detailed Metrics**: Tracking of tokens, semantic similarity and costs
+- **🔧 Modular Strategies**: Flexible and customizable system
+- **🌍 Multilingual**: Support for Italian and English
 
-## 📦 Installazione
+## 📦 Installation
 
 ```bash
 pip install prompt-optimizer
 ```
 
-### Installazione per sviluppo
+### Development Installation
 
 ```bash
 git clone https://github.com/yourusername/prompt-optimizer.git
@@ -39,7 +39,7 @@ from prompt_optimizer.strategies import (
     TokenReductionStrategy,
 )
 
-# Inizializza l'optimizer con adattatore GPT
+# Initialize optimizer with GPT adapter
 optimizer = PromptOptimizer(
     llm_adapter=OpenAIAdapter("gpt-4"),
     strategies=[
@@ -48,7 +48,7 @@ optimizer = PromptOptimizer(
     ]
 )
 
-# Prompt originale
+# Original prompt
 original_prompt = """
 Please could you very kindly analyze the following text and provide 
 a very detailed explanation of the main concepts. It is very important 
@@ -56,24 +56,24 @@ that you explain everything in a clear way. Thank you very much for
 your help with this task.
 """
 
-# Ottimizza
+# Optimize
 result = optimizer.optimize(original_prompt)
 
-print(f"Prompt originale: {result.original_prompt}")
-print(f"Prompt ottimizzato: {result.optimized_prompt}")
-print(f"Token risparmiati: {result.token_reduction}")
-print(f"Riduzione costi: ${result.cost_reduction:.4f}")
-print(f"Similarità semantica: {result.semantic_similarity:.2%}")
+print(f"Original prompt: {result.original_prompt}")
+print(f"Optimized prompt: {result.optimized_prompt}")
+print(f"Tokens saved: {result.token_reduction}")
+print(f"Cost reduction: ${result.cost_reduction:.4f}")
+print(f"Semantic similarity: {result.semantic_similarity:.2%}")
 ```
 
-### Ottimizzazione con Modello Specifico
+### Optimization with Specific Model
 
 ```python
 from prompt_optimizer import PromptOptimizer
 from prompt_optimizer.adapters import ClaudeAdapter
 from prompt_optimizer.strategies import StructuralOptimizationStrategy
 
-# Configurazione per Claude
+# Configuration for Claude
 adapter = ClaudeAdapter("claude-3-sonnet")
 optimizer = PromptOptimizer(
     llm_adapter=adapter,
@@ -82,7 +82,7 @@ optimizer = PromptOptimizer(
     preserve_meaning_threshold=0.90
 )
 
-# Ottimizza prompt complesso
+# Optimize complex prompt
 complex_prompt = """
 Context: We are analyzing customer feedback.
 Task: Please analyze the sentiment.
@@ -93,17 +93,17 @@ Example: "Great product" = positive sentiment.
 
 result = optimizer.optimize(complex_prompt)
 
-# Visualizza statistiche
-print(f"Token originali: {result.metadata['original_tokens']}")
-print(f"Token ottimizzati: {result.metadata['optimized_tokens']}")
-print(f"Percentuale riduzione: {result.metadata['reduction_percentage']:.1%}")
+# Display statistics
+print(f"Original tokens: {result.metadata['original_tokens']}")
+print(f"Optimized tokens: {result.metadata['optimized_tokens']}")
+print(f"Reduction percentage: {result.metadata['reduction_percentage']:.1%}")
 ```
 
-## 📚 Strategie di Ottimizzazione
+## 📚 Optimization Strategies
 
 ### 1. Semantic Compression Strategy
 
-Rimuove ridondanze semantiche, parole riempitive e semplifica costrutti verbosi.
+Removes semantic redundancy, filler words and simplifies verbose constructs.
 
 ```python
 from prompt_optimizer.strategies import SemanticCompressionStrategy
@@ -115,15 +115,15 @@ optimized = strategy.apply(
 # Output: "Analyze this text"
 ```
 
-**Tecniche applicate:**
-- Rimozione parole riempitive (very, really, actually, etc.)
-- Eliminazione frasi ridondanti
-- Semplificazione costrutti complessi
-- Condensazione frasi equivalenti
+**Techniques applied:**
+- Removal of filler words (very, really, actually, etc.)
+- Elimination of redundant phrases
+- Simplification of complex constructs
+- Condensation of equivalent sentences
 
 ### 2. Token Reduction Strategy
 
-Riduce il numero di token attraverso abbreviazioni, contrazioni e simbolizzazione.
+Reduces the number of tokens through abbreviations, contractions and symbolization.
 
 ```python
 from prompt_optimizer.strategies import TokenReductionStrategy
@@ -135,50 +135,50 @@ optimized = strategy.apply(
 # Output: "Max info about config needed"
 ```
 
-**Tecniche applicate:**
-- Abbreviazioni standard (information → info)
-- Contrazioni grammaticali (do not → don't)
-- Simbolizzazione (and → &, at → @)
-- Ottimizzazione numeri e date
+**Techniques applied:**
+- Standard abbreviations (information → info)
+- Grammatical contractions (do not → don't)
+- Symbolization (and → &, at → @)
+- Optimization of numbers and dates
 
 ### 3. Structural Optimization Strategy
 
-Riorganizza il prompt per massimizzare l'efficacia con i modelli LLM.
+Reorganizes the prompt to maximize effectiveness with LLM models.
 
 ```python
 from prompt_optimizer.strategies import StructuralOptimizationStrategy
 
 strategy = StructuralOptimizationStrategy()
 optimized = strategy.apply(messy_prompt)
-# Output: Prompt ben strutturato con sezioni chiare
+# Output: Well-structured prompt with clear sections
 ```
 
-**Tecniche applicate:**
-- Riorganizzazione in sezioni logiche
-- Ottimizzazione ordine istruzioni
-- Consolidamento istruzioni duplicate
-- Formattazione LLM-friendly
+**Techniques applied:**
+- Reorganization into logical sections
+- Optimization of instruction order
+- Consolidation of duplicate instructions
+- LLM-friendly formatting
 
-## 🎯 Adattatori Modelli
+## 🎯 Model Adapters
 
 ### OpenAI GPT
 
 ```python
 from prompt_optimizer.adapters import OpenAIAdapter
 
-# Supporta: gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o
+# Supports: gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o
 adapter = OpenAIAdapter("gpt-4")
 
-# Conta token accuratamente (usa tiktoken se disponibile)
-token_count = adapter.count_tokens("Il tuo prompt")
+# Count tokens accurately (uses tiktoken if available)
+token_count = adapter.count_tokens("Your prompt")
 
-# Calcola costi
+# Calculate costs
 cost = adapter.calculate_cost(input_tokens=1000, output_tokens=500)
 
-# Ottimizzazioni specifiche GPT
+# GPT-specific optimizations
 optimized = adapter.optimize_for_model(prompt)
 
-# Suggerimenti
+# Suggestions
 suggestions = adapter.suggest_optimizations(prompt)
 ```
 
@@ -187,60 +187,60 @@ suggestions = adapter.suggest_optimizations(prompt)
 ```python
 from prompt_optimizer.adapters import ClaudeAdapter
 
-# Supporta: claude-2, claude-3-haiku, claude-3-sonnet, claude-3-opus
+# Supports: claude-2, claude-3-haiku, claude-3-sonnet, claude-3-opus
 adapter = ClaudeAdapter("claude-3-sonnet")
 
-# Conteggio token per Claude
-token_count = adapter.count_tokens("Il tuo prompt")
+# Token count for Claude
+token_count = adapter.count_tokens("Your prompt")
 
-# Ottimizzazioni specifiche per Claude (XML tags, etc.)
+# Claude-specific optimizations (XML tags, etc.)
 optimized = adapter.optimize_for_model(prompt)
 
-# Verifica capacità contesto
+# Check context capacity
 can_fit = adapter.can_fit_in_context(prompt, reserve_tokens=1000)
 ```
 
-## 📊 Metriche e Analisi
+## 📊 Metrics and Analysis
 
-### Analisi Token
+### Token Analysis
 
 ```python
 from prompt_optimizer.metrics import TokenMetrics
 
 metrics = TokenMetrics()
 
-# Analisi dettagliata
+# Detailed analysis
 analysis = metrics.analyze_tokens(prompt)
-print(f"Token totali: {analysis.total_tokens}")
-print(f"Token unici: {analysis.unique_tokens}")
-print(f"Ridondanza: {analysis.redundancy_score:.2%}")
+print(f"Total tokens: {analysis.total_tokens}")
+print(f"Unique tokens: {analysis.unique_tokens}")
+print(f"Redundancy: {analysis.redundancy_score:.2%}")
 
-# Potenziale di riduzione
+# Reduction potential
 potential = metrics.calculate_reduction_potential(prompt)
-print(f"Riduzione stimata: {potential:.1%}")
+print(f"Estimated reduction: {potential:.1%}")
 ```
 
-### Analisi Semantica
+### Semantic Analysis
 
 ```python
 from prompt_optimizer.metrics import SemanticMetrics
 
 metrics = SemanticMetrics()
 
-# Similarità tra testi
+# Similarity between texts
 similarity = metrics.calculate_similarity(original, optimized)
-print(f"Similarità semantica: {similarity:.2%}")
+print(f"Semantic similarity: {similarity:.2%}")
 
-# Analisi contenuto
+# Content analysis
 analysis = metrics.analyze_semantic_content(prompt)
-print(f"Densità semantica: {analysis.semantic_density:.2f}")
-print(f"Complessità: {analysis.complexity_score:.2f}")
-print(f"Concetti chiave: {analysis.key_concepts}")
+print(f"Semantic density: {analysis.semantic_density:.2f}")
+print(f"Complexity: {analysis.complexity_score:.2f}")
+print(f"Key concepts: {analysis.key_concepts}")
 ```
 
-## 🔧 Configurazione Avanzata
+## 🔧 Advanced Configuration
 
-### Personalizzazione Strategie
+### Strategy Customization
 
 ```python
 from prompt_optimizer.strategies import OptimizationConfig
@@ -248,9 +248,9 @@ from prompt_optimizer.strategies import OptimizationConfig
 config = OptimizationConfig(
     aggressive_mode=True,
     preserve_structure=False,
-    target_reduction=0.30,  # Riduzione target del 30%
+    target_reduction=0.30,  # Target 30% reduction
     custom_params={
-        'use_xml_tags': True,  # Per Claude
+        'use_xml_tags': True,  # For Claude
         'encourage_reasoning': True
     }
 )
@@ -258,16 +258,16 @@ config = OptimizationConfig(
 strategy = SemanticCompressionStrategy(config=config)
 ```
 
-### Ottimizzazione Batch
+### Batch Optimization
 
 ```python
 prompts = [
-    "Primo prompt da ottimizzare...",
-    "Secondo prompt...",
-    "Terzo prompt..."
+    "First prompt to optimize...",
+    "Second prompt...",
+    "Third prompt..."
 ]
 
-# Ottimizza tutti i prompt
+# Optimize all prompts
 results = optimizer.batch_optimize(
     prompts,
     target_reduction=0.25,
@@ -275,31 +275,31 @@ results = optimizer.batch_optimize(
 )
 
 for i, result in enumerate(results):
-    print(f"Prompt {i+1}: {result.token_reduction} token risparmiati")
+    print(f"Prompt {i+1}: {result.token_reduction} tokens saved")
 ```
 
-### Soglie Personalizzate
+### Custom Thresholds
 
 ```python
 optimizer = PromptOptimizer(
     llm_adapter=adapter,
     strategies=strategies,
-    preserve_meaning_threshold=0.95,  # Massima preservazione significato
-    aggressive_mode=False  # Ottimizzazione conservativa
+    preserve_meaning_threshold=0.95,  # Maximum meaning preservation
+    aggressive_mode=False  # Conservative optimization
 )
 ```
 
-## 💡 Esempi Pratici
+## 💡 Practical Examples
 
-### Esempio 1: Ottimizzazione per Riduzione Costi
+### Example 1: Cost Reduction Optimization
 
 ```python
 from prompt_optimizer import PromptOptimizer
 from prompt_optimizer.adapters import OpenAIAdapter
 from prompt_optimizer.strategies import TokenReductionStrategy
 
-# Configura per massima riduzione costi
-adapter = OpenAIAdapter("gpt-4")  # Modello costoso
+# Configure for maximum cost reduction
+adapter = OpenAIAdapter("gpt-4")  # Expensive model
 optimizer = PromptOptimizer(
     llm_adapter=adapter,
     strategies=[TokenReductionStrategy()],
@@ -313,10 +313,10 @@ summary of all the main points that are discussed throughout the text.
 """
 
 result = optimizer.optimize(verbose_prompt)
-print(f"Risparmio stimato: ${result.cost_reduction:.4f}")
+print(f"Estimated savings: ${result.cost_reduction:.4f}")
 ```
 
-### Esempio 2: Ottimizzazione Preservando Struttura
+### Example 2: Structure-Preserving Optimization
 
 ```python
 from prompt_optimizer import PromptOptimizer
@@ -335,25 +335,25 @@ result = optimizer.optimize(
     structured_prompt,
     preserve_structure=True
 )
-# Output: Prompt riorganizzato in sezioni logiche
+# Output: Prompt reorganized into logical sections
 ```
 
-### Esempio 3: Analisi Prima dell'Ottimizzazione
+### Example 3: Pre-Optimization Analysis
 
 ```python
 from prompt_optimizer.adapters import ClaudeAdapter
 
 adapter = ClaudeAdapter("claude-3-opus")
 
-# Analizza il prompt prima di ottimizzare
+# Analyze prompt before optimizing
 suggestions = adapter.suggest_optimizations(your_prompt)
 
-print("Analisi prompt:")
-print(f"Token attuali: {suggestions['current_tokens']}")
-print(f"Uso contesto: {suggestions['context_usage_percent']:.1f}%")
-print(f"Costo stimato: ${suggestions['estimated_cost']:.4f}")
+print("Prompt analysis:")
+print(f"Current tokens: {suggestions['current_tokens']}")
+print(f"Context usage: {suggestions['context_usage_percent']:.1f}%")
+print(f"Estimated cost: ${suggestions['estimated_cost']:.4f}")
 
-print("\nSuggerimenti:")
+print("\nSuggestions:")
 for suggestion in suggestions['suggestions']:
     print(f"- [{suggestion['severity']}] {suggestion['message']}")
 ```
@@ -361,29 +361,29 @@ for suggestion in suggestions['suggestions']:
 ## 🧪 Testing
 
 ```bash
-# Run tutti i test
+# Run all tests
 pytest
 
-# Test con coverage
+# Tests with coverage
 pytest --cov=prompt_optimizer --cov-report=html
 
-# Test specifici
+# Specific tests
 pytest tests/test_strategies.py
 pytest tests/test_adapters.py
 ```
 
-## 🛠️ Sviluppo
+## 🛠️ Development
 
-### Setup Ambiente
+### Environment Setup
 
 ```bash
-# Crea virtual environment
+# Create virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# o
+# or
 venv\\Scripts\\activate  # Windows
 
-# Installa dipendenze dev
+# Install dev dependencies
 pip install -e ".[dev]"
 
 # Setup pre-commit hooks
@@ -408,38 +408,38 @@ mypy src/
 
 ## 📈 Performance
 
-Benchmark su dataset di 1000 prompt:
+Benchmark on dataset of 1000 prompts:
 
-| Strategia | Riduzione Media | Tempo Medio | Similarità |
+| Strategy | Average Reduction | Average Time | Similarity |
 |-----------|----------------|-------------|------------|
 | Semantic Compression | 25% | 0.15s | 92% |
 | Token Reduction | 18% | 0.08s | 95% |
 | Structural | 12% | 0.22s | 98% |
-| Combinata | 35% | 0.40s | 90% |
+| Combined | 35% | 0.40s | 90% |
 
-## 🤝 Contribuire
+## 🤝 Contributing
 
-Contributi sono benvenuti! Per favore:
+Contributions are welcome! Please:
 
-1. Fork del repository
-2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit delle modifiche (`git commit -m 'Add AmazingFeature'`)
-4. Push al branch (`git push origin feature/AmazingFeature`)
-5. Apri una Pull Request
+1. Fork the repository
+2. Create a branch for your feature (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
-Vedi [CONTRIBUTING.md](CONTRIBUTING.md) per dettagli.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
 
-## 📄 Licenza
+## 📄 License
 
-Questo progetto è distribuito sotto licenza MIT. Vedi il file `LICENSE` per dettagli.
+This project is distributed under the MIT License. See the `LICENSE` file for details.
 
-## 🙏 Ringraziamenti
+## 🙏 Acknowledgments
 
-- OpenAI per tiktoken
-- Anthropic per le best practices su prompt engineering
-- La community di sviluppatori AI
+- OpenAI for tiktoken
+- Anthropic for prompt engineering best practices
+- The AI developer community
 
-## 📞 Contatti
+## 📞 Contact
 
 - **Email**: your.email@example.com
 - **GitHub**: [@yourusername](https://github.com/yourusername)
@@ -447,13 +447,13 @@ Questo progetto è distribuito sotto licenza MIT. Vedi il file `LICENSE` per det
 
 ## 🗺️ Roadmap
 
-- [ ] Supporto per più modelli LLM (Llama, Mistral, etc.)
-- [ ] Interfaccia web per testing
-- [ ] Cache dei risultati di ottimizzazione
+- [ ] Support for more LLM models (Llama, Mistral, etc.)
+- [ ] Web interface for testing
+- [ ] Optimization results caching
 - [ ] ML-based optimization strategies
-- [ ] Integrazione con LangChain
-- [ ] Supporto per prompt multimodali
+- [ ] LangChain integration
+- [ ] Support for multimodal prompts
 
 ---
 
-**Fatto con ❤️ per la community AI**
+**Made with ❤️ for the AI community**

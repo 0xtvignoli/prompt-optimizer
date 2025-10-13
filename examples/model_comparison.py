@@ -1,8 +1,8 @@
 """
 Esempio avanzato: Confronto tra diversi modelli LLM.
 
-Questo script mostra come ottimizzare lo stesso prompt
-per diversi modelli e confrontare i risultati.
+Questo script mostra how ottimizzare lo stesso prompt
+for diversi modelli e confrontare i results.
 """
 
 from prompt_optimizer import PromptOptimizer
@@ -15,7 +15,7 @@ from prompt_optimizer.strategies import (
 
 
 def optimize_for_model(adapter, prompt):
-    """Ottimizza un prompt per un modello specifico."""
+    """Optimizes un prompt for un modello specifico."""
     optimizer = PromptOptimizer(
         llm_adapter=adapter,
         strategies=[
@@ -34,7 +34,7 @@ def main():
     print("=" * 80)
     print()
     
-    # Prompt complesso da ottimizzare
+    # Prompt complesso from ottimizzare
     complex_prompt = """
     Context: We are conducting an analysis of customer feedback data 
     from our e-commerce platform. The data includes reviews, ratings, 
@@ -61,7 +61,7 @@ def main():
     print(f"Lunghezza: {len(complex_prompt)} caratteri")
     print()
     
-    # Modelli da testare
+    # Modelli from testare
     models = [
         ("GPT-3.5 Turbo", OpenAIAdapter("gpt-3.5-turbo")),
         ("GPT-4", OpenAIAdapter("gpt-4")),
@@ -80,13 +80,13 @@ def main():
         print(f"\n{model_name}:")
         print("-" * 80)
         
-        # Analisi pre-ottimizzazione
+        # Analisi pre-optimization
         token_count_before = adapter.count_tokens(complex_prompt)
         cost_before = adapter.calculate_cost(token_count_before)
         
         print(f"Prima: {token_count_before} token, ${cost_before:.6f}")
         
-        # Ottimizza
+        # Optimizes
         result = optimize_for_model(adapter, complex_prompt)
         
         token_count_after = result.metadata['optimized_tokens']
@@ -161,19 +161,19 @@ def main():
     print("=" * 80)
     print()
     
-    # Modello con miglior rapporto qualità/prezzo
+    # Modello with miglior rapporto qualità/prezzo
     best_value = min(results, key=lambda x: x['cost_after'])
     print(f"✓ Miglior rapporto qualità/prezzo: {best_value['model']}")
-    print(f"  Costo per richiesta: ${best_value['cost_after']:.6f}")
+    print(f"  Costo for richiesta: ${best_value['cost_after']:.6f}")
     
-    # Modello con maggior riduzione percentuale
+    # Modello with maggior reduction percentuale
     best_reduction = max(results, key=lambda x: x['result'].metadata['reduction_percentage'])
-    print(f"\n✓ Maggior riduzione token: {best_reduction['model']}")
+    print(f"\n✓ Maggior reduction token: {best_reduction['model']}")
     print(f"  Riduzione: {best_reduction['result'].metadata['reduction_percentage']:.1%}")
     
-    # Modello con miglior similarità semantica
+    # Modello with miglior similarity semantic
     best_similarity = max(results, key=lambda x: x['result'].semantic_similarity)
-    print(f"\n✓ Miglior preservazione semantica: {best_similarity['model']}")
+    print(f"\n✓ Miglior preservazione semantic: {best_similarity['model']}")
     print(f"  Similarità: {best_similarity['result'].semantic_similarity:.1%}")
     
     print("\n" + "=" * 80)

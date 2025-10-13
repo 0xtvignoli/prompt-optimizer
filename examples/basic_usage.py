@@ -1,8 +1,8 @@
 """
 Esempio base di utilizzo di Prompt Optimizer.
 
-Questo script dimostra come ottimizzare un prompt semplice
-e visualizzare i risultati.
+Questo script dimostra how ottimizzare un prompt semplice
+e visualizzare i results.
 """
 
 from prompt_optimizer import PromptOptimizer
@@ -34,7 +34,7 @@ def main():
     print(original_prompt.strip())
     print()
     
-    # Inizializza l'optimizer
+    # Initializes l'optimizer
     print("Inizializzazione optimizer...")
     adapter = OpenAIAdapter("gpt-4")
     optimizer = PromptOptimizer(
@@ -48,13 +48,13 @@ def main():
     print("✓ Optimizer inizializzato")
     print()
     
-    # Ottimizza il prompt
+    # Optimizes il prompt
     print("Ottimizzazione in corso...")
     result = optimizer.optimize(original_prompt)
     print("✓ Ottimizzazione completata")
     print()
     
-    # Visualizza risultati
+    # Visualizza results
     print("PROMPT OTTIMIZZATO:")
     print("-" * 60)
     print(result.optimized_prompt.strip())
@@ -66,9 +66,9 @@ def main():
     print(f"Token ottimizzati:    {result.metadata['optimized_tokens']}")
     print(f"Token risparmiati:    {result.token_reduction}")
     print(f"Riduzione:            {result.metadata['reduction_percentage']:.1%}")
-    print(f"Similarità semantica: {result.semantic_similarity:.1%}")
-    print(f"Risparmio costi:      ${result.cost_reduction:.6f}")
-    print(f"Tempo ottimizzazione: {result.optimization_time:.3f}s")
+    print(f"Similarità semantic: {result.semantic_similarity:.1%}")
+    print(f"Risparmio costs:      ${result.cost_reduction:.6f}")
+    print(f"Tempo optimization: {result.optimization_time:.3f}s")
     print()
     
     print("STRATEGIE APPLICATE:")
@@ -77,7 +77,7 @@ def main():
         print(f"✓ {strategy}")
     print()
     
-    # Calcola risparmio annuale (esempio con 1000 richieste/giorno)
+    # Calculates risparmio annuale (example with 1000 richieste/giorno)
     daily_requests = 1000
     annual_savings = result.cost_reduction * daily_requests * 365
     
@@ -89,7 +89,7 @@ def main():
     print()
     
     print("=" * 60)
-    print("✓ Esempio completato con successo!")
+    print("✓ Esempio completato with successo!")
     print("=" * 60)
 
 

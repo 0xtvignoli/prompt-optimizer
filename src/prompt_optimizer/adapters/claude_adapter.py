@@ -1,8 +1,8 @@
 """
-Adattatore per modelli Anthropic Claude.
+Adattatore for modelli Anthropic Claude.
 
 Gestisce il conteggio token e le ottimizzazioni specifiche
-per i modelli Claude di Anthropic.
+for i modelli Claude di Anthropic.
 """
 
 import re
@@ -12,15 +12,15 @@ from .base import LLMAdapter, ModelConfig
 
 class ClaudeAdapter(LLMAdapter):
     """
-    Adattatore per modelli Anthropic Claude.
+    Adattatore for modelli Anthropic Claude.
     
-    Supporta Claude 2, Claude 3 (Haiku, Sonnet, Opus) con 
-    ottimizzazioni specifiche per il formato prompt di Anthropic.
+    Supporta Claude 2, Claude 3 (Haiku, Sonnet, Opus) with 
+    ottimizzazioni specifiche for il formato prompt di Anthropic.
     """
     
     def __init__(self, model_name: str = "claude-3-sonnet", config: Optional[ModelConfig] = None):
         """
-        Inizializza l'adattatore Claude.
+        Initializes l'adattatore Claude.
         
         Args:
             model_name: Nome del modello Claude
@@ -31,24 +31,24 @@ class ClaudeAdapter(LLMAdapter):
     
     def count_tokens(self, text: str) -> int:
         """
-        Conta i token per Claude.
+        Conta i token for Claude.
         
-        Claude usa un tokenizer simile a GPT ma con alcune differenze.
+        Claude usa un tokenizer simile a GPT ma with alcune differenze.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
             Numero di token
         """
         text = self._clean_text_for_tokenization(text)
         
-        # Claude tokenizer è simile a GPT ma con alcune differenze
+        # Claude tokenizer è simile a GPT ma with alcune differenze
         return self._estimate_claude_tokens(text)
     
     def calculate_cost(self, input_tokens: int, output_tokens: int = 0) -> float:
         """
-        Calcola il costo per i token di input e output.
+        Calculates il cost for i token di input e output.
         
         Args:
             input_tokens: Token di input
@@ -64,37 +64,37 @@ class ClaudeAdapter(LLMAdapter):
     
     def optimize_for_model(self, prompt: str) -> str:
         """
-        Applica ottimizzazioni specifiche per Claude.
+        Applies ottimizzazioni specifiche for Claude.
         
-        Claude funziona particolarmente bene con:
-        - Prompt strutturati con XML-like tags
+        Claude funziona particolarmente bene with:
+        - Prompt strutturati with XML-like tags
         - Istruzioni chiare e dirette
         - Esempi ben formattati
         
         Args:
-            prompt: Prompt da ottimizzare
+            prompt: Prompt from ottimizzare
             
         Returns:
-            Prompt ottimizzato per Claude
+            Prompt ottimizzato for Claude
         """
         optimized = prompt
         
-        # 1. Ottimizzazioni per formato Claude
+        # 1. Ottimizzazioni for formato Claude
         optimized = self._optimize_for_claude_format(optimized)
         
-        # 2. Migliora struttura con XML tags se appropriato
+        # 2. Migliora struttura with XML tags if appropriato
         optimized = self._add_structural_tags_if_needed(optimized)
         
-        # 3. Ottimizza per le caratteristiche di Claude
+        # 3. Optimizes for le caratteristiche di Claude
         optimized = self._optimize_claude_characteristics(optimized)
         
-        # 4. Ottimizza esempi se presenti
+        # 4. Optimizes examples if presenti
         optimized = self._optimize_examples_for_claude(optimized)
         
         return optimized.strip()
     
     def _get_default_config(self) -> ModelConfig:
-        """Restituisce la configurazione di default basata sul modello."""
+        """Returns la configuration di default basata sul modello."""
         configs = {
             "claude-2": ModelConfig(
                 model_name="claude-2",
@@ -144,31 +144,31 @@ class ClaudeAdapter(LLMAdapter):
     
     def _initialize_tokenizer(self):
         """
-        Inizializza il tokenizer per Claude.
+        Initializes il tokenizer for Claude.
         
-        Note: Al momento non c'è un tokenizer pubblico ufficiale per Claude,
+        Note: Al momento non c'è un tokenizer pubblico ufficiale for Claude,
         quindi usiamo stime basate sulle caratteristiche note.
         """
-        # Claude non ha un tokenizer pubblico come tiktoken per GPT
+        # Claude non ha un tokenizer pubblico how tiktoken for GPT
         # Usiamo stime basate sulle caratteristiche documentate
         return None
     
     def _estimate_claude_tokens(self, text: str) -> int:
         """
-        Stima i token per Claude.
+        Estimates i token for Claude.
         
-        Claude tokenizer è simile a GPT ma con alcune differenze:
-        - Circa 3.5-4 caratteri per token
+        Claude tokenizer è simile a GPT ma with alcune differenze:
+        - Circa 3.5-4 caratteri for token
         - Gestisce meglio il multilinguismo
-        - Tokenizzazione leggermente diversa per punteggiatura
+        - Tokenizzazione leggermente diversa for punteggiatura
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
-            Stima dei token
+            Estimates dei token
         """
-        # Base estimate: circa 4 caratteri per token
+        # Base estimate: circa 4 caratteri for token
         base_estimate = len(text) / 4
         
         words = text.split()
@@ -194,13 +194,13 @@ class ClaudeAdapter(LLMAdapter):
         return max(1, int(total_estimate))
     
     def _optimize_for_claude_format(self, prompt: str) -> str:
-        """Ottimizza per il formato preferito da Claude."""
-        # Claude funziona bene con istruzioni dirette
+        """Optimizes for il formato preferito from Claude."""
+        # Claude funziona bene with istruzioni dirette
         # Rimuovi preamboli non necessari
         
         optimized = prompt
         
-        # Rimuovi cortesie eccessive che non servono con Claude
+        # Rimuovi cortesie eccessive che non servono with Claude
         optimized = re.sub(
             r'\b(please|kindly)\s+(could you|would you|can you)\s+',
             '',
@@ -223,11 +223,11 @@ class ClaudeAdapter(LLMAdapter):
     
     def _add_structural_tags_if_needed(self, prompt: str) -> str:
         """
-        Aggiunge XML-like tags per strutturare il prompt se utile.
+        Aggiunge XML-like tags for strutturare il prompt if utile.
         
-        Claude risponde molto bene a prompt strutturati con tags XML.
+        Claude risponde molto bene a prompt strutturati with tags XML.
         """
-        # Se il prompt ha già tags XML, lasciali come sono
+        # Se il prompt ha già tags XML, lasciali how sono
         if re.search(r'<[^>]+>', prompt):
             return prompt
         
@@ -239,7 +239,7 @@ class ClaudeAdapter(LLMAdapter):
             return prompt
         
         # Per prompt complessi, aggiungi una struttura minima
-        # (opzionale, basato sulla configurazione)
+        # (opzionale, basato sulla configuration)
         if self.config.custom_params and self.config.custom_params.get('use_xml_tags', False):
             structured_sections = []
             
@@ -261,40 +261,40 @@ class ClaudeAdapter(LLMAdapter):
         return prompt
     
     def _optimize_claude_characteristics(self, prompt: str) -> str:
-        """Ottimizza sfruttando le caratteristiche specifiche di Claude."""
+        """Optimizes sfruttando le caratteristiche specifiche di Claude."""
         optimized = prompt
         
-        # Claude è molto bravo con ragionamento esplicito
-        # Se il prompt richiede analisi, incoraggia step-by-step thinking
+        # Claude è molto bravo with ragionamento esplicito
+        # Se il prompt richiede analysis, incoraggia step-by-step thinking
         analysis_keywords = ['analyze', 'explain', 'reasoning', 'why', 'how',
-                            'analizza', 'spiega', 'ragionamento', 'perché', 'come']
+                            'analyzes', 'spiega', 'ragionamento', 'perché', 'how']
         
         if any(keyword in prompt.lower() for keyword in analysis_keywords):
-            # Verifica se non c'è già una richiesta esplicita di step-by-step
+            # Checks if non c'è già una richiesta esplicita di step-by-step
             if not re.search(r'step[- ]by[- ]step', prompt, re.IGNORECASE):
-                # Claude beneficia di istruzioni per pensare passo dopo passo
-                # (ma solo se configurato per farlo)
+                # Claude beneficia di istruzioni for pensare passo dopo passo
+                # (ma solo if configurato for farlo)
                 if self.config.custom_params and self.config.custom_params.get('encourage_reasoning', False):
                     optimized += '\n\nThink step by step.'
         
-        # Ottimizza spazi e formattazione
+        # Optimizes spazi e formattazione
         optimized = re.sub(r'\n{3,}', '\n\n', optimized)  # Max 2 newlines
         optimized = re.sub(r' {2,}', ' ', optimized)  # Single spaces
         
         return optimized
     
     def _optimize_examples_for_claude(self, prompt: str) -> str:
-        """Ottimizza gli esempi per il formato preferito da Claude."""
-        # Claude funziona molto bene con esempi ben strutturati
+        """Optimizes gli examples for il formato preferito from Claude."""
+        # Claude funziona molto bene with examples ben strutturati
         
-        # Se ci sono esempi nel prompt, assicurati che siano ben formattati
-        example_pattern = r'(example|esempio|e\.g\.|for instance)[\s:]+(.*?)(?=\n\n|\n[A-Z]|$)'
+        # Se ci sono examples nel prompt, assicurati che siano ben formattati
+        example_pattern = r'(example|example|e\.g\.|for instance)[\s:]+(.*?)(?=\n\n|\n[A-Z]|$)'
         
         def format_example(match):
             intro = match.group(1)
             content = match.group(2).strip()
             
-            # Se l'esempio non è già in un tag, lo formatta meglio
+            # Se l'example non è già in un tag, lo formatta meglio
             if not content.startswith('<'):
                 return f'{intro}: {content}'
             return match.group(0)
@@ -304,48 +304,48 @@ class ClaudeAdapter(LLMAdapter):
         return optimized
     
     def suggest_optimizations(self, prompt: str) -> Dict[str, Any]:
-        """Suggerisce ottimizzazioni specifiche per Claude."""
+        """Suggerisce ottimizzazioni specifiche for Claude."""
         suggestions = super().suggest_optimizations(prompt)
         
-        # Aggiungi suggerimenti specifici per Claude
+        # Aggiungi suggerimenti specifici for Claude
         token_count = self.count_tokens(prompt)
         
         # Claude ha un contesto molto grande, ma ci sono comunque best practices
         if token_count > 150000:
             suggestions['suggestions'].append({
                 'type': 'context_warning',
-                'message': 'Prompt molto lungo. Anche se Claude supporta 200K token, '
-                          'considera di suddividere per migliori performance',
+                'message': 'Prompt molto lungo. Anche if Claude supporta 200K token, '
+                          'considera di suddividere for migliori performance',
                 'severity': 'medium'
             })
         
-        # Suggerisci uso di XML tags per prompt complessi
+        # Suggerisci uso di XML tags for prompt complessi
         if len(prompt.split('\n\n')) > 3 and not re.search(r'<[^>]+>', prompt):
             suggestions['suggestions'].append({
                 'type': 'format_optimization',
-                'message': 'Considera l\'uso di XML tags per strutturare meglio il prompt '
+                'message': 'Considera l\'uso di XML tags for strutturare meglio il prompt '
                           '(es: <context>, <instruction>, <example>)',
                 'severity': 'low'
             })
         
-        # Suggerisci modello più economico se appropriato
+        # Suggerisci modello più economico if appropriato
         if self.model_name == "claude-3-opus" and token_count < 10000:
             suggestions['suggestions'].append({
                 'type': 'cost_optimization',
                 'message': 'Per prompt brevi, considera Claude 3 Sonnet o Haiku '
-                          'per ridurre significativamente i costi',
+                          'for ridurre significativamente i costs',
                 'severity': 'medium'
             })
         
-        # Suggerisci step-by-step per analisi complesse
-        analysis_keywords = ['analyze', 'explain', 'reasoning', 'analizza', 'spiega']
+        # Suggerisci step-by-step for analysis complesse
+        analysis_keywords = ['analyze', 'explain', 'reasoning', 'analyzes', 'spiega']
         has_analysis = any(kw in prompt.lower() for kw in analysis_keywords)
         has_step_instruction = re.search(r'step[- ]by[- ]step', prompt, re.IGNORECASE)
         
         if has_analysis and not has_step_instruction:
             suggestions['suggestions'].append({
                 'type': 'effectiveness_tip',
-                'message': 'Claude performa meglio con istruzioni esplicite per "think step by step" '
+                'message': 'Claude performa meglio with istruzioni esplicite for "think step by step" '
                           'in task analitici',
                 'severity': 'low'
             })

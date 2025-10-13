@@ -1,9 +1,9 @@
 """
-Modulo contenente gli adattatori per diversi modelli LLM.
+Module contenente gli adattatori for diversi modelli LLM.
 
 Gli adattatori forniscono:
-- Conteggio accurato dei token per ogni modello
-- Calcolo dei costi
+- Conteggio accurato dei token for ogni modello
+- Calcolo dei costs
 - Ottimizzazioni specifiche del modello
 """
 

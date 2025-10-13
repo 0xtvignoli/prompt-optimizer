@@ -1,5 +1,5 @@
 """
-Configurazione e fixtures condivise per i test.
+Configurazione e fixtures condivise for i test.
 """
 
 import pytest
@@ -12,7 +12,7 @@ from prompt_optimizer.strategies import (
 )
 
 
-# Sample prompts per testing
+# Sample prompts for testing
 SAMPLE_PROMPTS = {
     "simple": "Please analyze this text.",
     "verbose": """
@@ -37,31 +37,31 @@ SAMPLE_PROMPTS = {
 
 @pytest.fixture
 def sample_prompts():
-    """Fornisce prompt di esempio per i test."""
+    """Provides prompt di example for i test."""
     return SAMPLE_PROMPTS
 
 
 @pytest.fixture
 def simple_prompt():
-    """Prompt semplice per test veloci."""
+    """Prompt semplice for test veloci."""
     return SAMPLE_PROMPTS["simple"]
 
 
 @pytest.fixture
 def verbose_prompt():
-    """Prompt verboso per test di ottimizzazione."""
+    """Prompt verboso for test di optimization."""
     return SAMPLE_PROMPTS["verbose"]
 
 
 @pytest.fixture
 def complex_prompt():
-    """Prompt complesso per test strutturali."""
+    """Prompt complesso for test strutturali."""
     return SAMPLE_PROMPTS["complex"]
 
 
 @pytest.fixture
 def redundant_prompt():
-    """Prompt ridondante per test di compressione."""
+    """Prompt ridondante for test di compressione."""
     return SAMPLE_PROMPTS["redundant"]
 
 
@@ -110,7 +110,7 @@ def claude_adapter():
 # Optimizer fixtures
 @pytest.fixture
 def basic_optimizer(openai_adapter, semantic_strategy):
-    """Basic optimizer con una strategia."""
+    """Basic optimizer with una strategy."""
     return PromptOptimizer(
         llm_adapter=openai_adapter,
         strategies=[semantic_strategy]
@@ -119,7 +119,7 @@ def basic_optimizer(openai_adapter, semantic_strategy):
 
 @pytest.fixture
 def full_optimizer(openai_adapter, all_strategies):
-    """Optimizer con tutte le strategie."""
+    """Optimizer with tutte le strategie."""
     return PromptOptimizer(
         llm_adapter=openai_adapter,
         strategies=all_strategies

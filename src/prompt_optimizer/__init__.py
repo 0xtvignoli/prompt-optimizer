@@ -1,11 +1,11 @@
 """
-Prompt Optimizer - Un pacchetto Python per l'ottimizzazione dei prompt LLM
+Prompt Optimizer - A Python package for LLM prompt optimization
 
-Questo pacchetto fornisce strumenti per:
-- Ottimizzazione semantica dei prompt
-- Riduzione del numero di token mantenendo il significato
-- Miglioramento dell'efficacia dei prompt per diversi LLM
-- Analisi dei costi e delle prestazioni
+This package provides tools for:
+- Semantic optimization of prompts
+- Token count reduction while preserving meaning
+- Improving prompt effectiveness for different LLMs
+- Cost and performance analysis
 """
 
 __version__ = "0.1.0"

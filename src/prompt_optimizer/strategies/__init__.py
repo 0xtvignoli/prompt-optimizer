@@ -1,8 +1,8 @@
 """
-Modulo contenente tutte le strategie di ottimizzazione disponibili.
+Module contenente tutte le strategie di optimization disponibili.
 
-Le strategie implementano diverse tecniche per ottimizzare i prompt:
-- Compressione semantica
+Le strategie implementano diverse tecniche for ottimizzare i prompt:
+- Compressione semantic
 - Riduzione token
 - Ottimizzazione strutturale
 """

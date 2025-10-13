@@ -1,5 +1,5 @@
 """
-Strategia di compressione semantica per ridurre la ridondanza
+Strategy di compressione semantic for ridurre la ridondanza
 mantenendo il significato del prompt.
 """
 
@@ -10,7 +10,7 @@ from .base import OptimizationStrategy
 
 class SemanticCompressionStrategy(OptimizationStrategy):
     """
-    Strategia che comprime il testo rimuovendo ridondanze semantiche,
+    Strategy che comprime il text rimuovendo ridondanze semantiche,
     parole riempitive e migliorando la struttura del prompt.
     
     Tecniche applicate:
@@ -29,10 +29,10 @@ class SemanticCompressionStrategy(OptimizationStrategy):
     
     def apply(self, prompt: str) -> str:
         """
-        Applica la compressione semantica al prompt.
+        Applies la compressione semantic al prompt.
         
         Args:
-            prompt: Il prompt originale
+            prompt: Il original prompt
             
         Returns:
             Il prompt compresso semanticamente
@@ -51,20 +51,20 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         # Step 4: Condensa frasi equivalenti
         optimized = self._condense_equivalent_phrases(optimized)
         
-        # Step 5: Ottimizza punteggiatura e spazi
+        # Step 5: Optimizes punteggiatura e spazi
         optimized = self._optimize_punctuation(optimized)
         
         return optimized.strip()
     
     def estimate_reduction(self, prompt: str) -> float:
         """
-        Stima la riduzione ottenibile con questa strategia.
+        Estimates la reduction ottenibile with questa strategy.
         
         Args:
-            prompt: Il prompt da analizzare
+            prompt: Il prompt from analizzare
             
         Returns:
-            Stima della riduzione percentuale
+            Estimates della reduction percentuale
         """
         if not self.can_apply(prompt):
             return 0.0
@@ -76,29 +76,29 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         
         total_words = len(prompt.split())
         
-        # Stima basata sui fattori identificati
+        # Estimates basata sui fattori identificati
         estimated_reduction = (
             (filler_count / total_words) * 0.3 +  # 30% del filler può essere rimosso
             redundancy_score * 0.2 +              # 20% della ridondanza
             verbosity_score * 0.15                # 15% della verbosità
         )
         
-        return min(estimated_reduction, 0.4)  # Max 40% di riduzione
+        return min(estimated_reduction, 0.4)  # Max 40% di reduction
     
     def can_apply(self, prompt: str) -> bool:
         """
-        Verifica se la strategia può essere applicata.
+        Checks if la strategy può essere applicata.
         
         Args:
-            prompt: Il prompt da analizzare
+            prompt: Il prompt from analizzare
             
         Returns:
-            True se applicabile
+            True if applicabile
         """
         if not prompt or len(prompt.strip()) < 20:
             return False
         
-        # Verifica presenza di elementi comprimibili
+        # Checks presenza di elementi comprimibili
         has_fillers = self._count_filler_words(prompt) > 0
         has_redundancy = self._calculate_redundancy_score(prompt) > 0.1
         has_verbosity = self._calculate_verbosity_score(prompt) > 0.1
@@ -106,14 +106,14 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         return has_fillers or has_redundancy or has_verbosity
     
     def _remove_filler_words(self, text: str) -> str:
-        """Rimuove parole riempitive dal testo."""
+        """Removes parole riempitive dal text."""
         words = text.split()
         filtered_words = []
         
         for i, word in enumerate(words):
             word_clean = re.sub(r'[^\w]', '', word.lower())
             
-            # Mantieni la parola se non è un filler o se è importante nel contesto
+            # Mantieni la parola if non è un filler o if è importante nel contesto
             if (word_clean not in self.filler_words or 
                 self._is_contextually_important(words, i)):
                 filtered_words.append(word)
@@ -121,7 +121,7 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         return ' '.join(filtered_words)
     
     def _remove_redundant_phrases(self, text: str) -> str:
-        """Rimuove frasi ridondanti comuni."""
+        """Removes frasi ridondanti comuni."""
         for redundant, replacement in self.redundant_phrases.items():
             # Case insensitive replacement
             pattern = re.compile(redundant, re.IGNORECASE)
@@ -149,11 +149,11 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         return '. '.join(condensed_sentences)
     
     def _optimize_punctuation(self, text: str) -> str:
-        """Ottimizza punteggiatura e spaziatura."""
+        """Optimizes punteggiatura e spaziatura."""
         # Rimuovi spazi multipli
         text = re.sub(r'\s+', ' ', text)
         
-        # Ottimizza punteggiatura
+        # Optimizes punteggiatura
         text = re.sub(r'\s*,\s*', ', ', text)
         text = re.sub(r'\s*\.\s*', '. ', text)
         text = re.sub(r'\s*;\s*', '; ', text)
@@ -166,17 +166,17 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         return text
     
     def _count_filler_words(self, text: str) -> int:
-        """Conta le parole riempitive nel testo."""
+        """Conta le parole riempitive nel text."""
         words = text.lower().split()
         return sum(1 for word in words if re.sub(r'[^\w]', '', word) in self.filler_words)
     
     def _calculate_redundancy_score(self, text: str) -> float:
-        """Calcola un punteggio di ridondanza del testo."""
+        """Calculates un punteggio di ridondanza del text."""
         sentences = text.split('.')
         if len(sentences) < 2:
             return 0.0
         
-        # Calcola similarità tra frasi
+        # Calculates similarity tra frasi
         similarities = []
         for i in range(len(sentences)):
             for j in range(i + 1, len(sentences)):
@@ -186,7 +186,7 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     def _calculate_verbosity_score(self, text: str) -> float:
-        """Calcola un punteggio di verbosità."""
+        """Calculates un punteggio di verbosità."""
         words = text.split()
         if not words:
             return 0.0
@@ -208,11 +208,11 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         return (filler_ratio + verbose_ratio + (avg_word_length - 5) / 10) / 3
     
     def _is_contextually_important(self, words: List[str], index: int) -> bool:
-        """Determina se una parola riempitiva è importante nel contesto."""
+        """Determines if una parola riempitiva è importante nel contesto."""
         if index == 0 or index == len(words) - 1:
             return True  # Mantieni filler all'inizio/fine
         
-        # Controlla se la parola è parte di una costruzione importante
+        # Controlla if la parola è parte di una costruzione importante
         context_window = words[max(0, index-2):min(len(words), index+3)]
         context_text = ' '.join(context_window).lower()
         
@@ -225,14 +225,14 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         return any(re.search(pattern, context_text) for pattern in important_patterns)
     
     def _is_duplicate_meaning(self, sentence: str, existing_sentences: List[str]) -> bool:
-        """Verifica se una frase ha significato duplicato."""
+        """Checks if una frase ha significato duplicato."""
         for existing in existing_sentences:
             if self._sentence_similarity(sentence, existing) > 0.7:
                 return True
         return False
     
     def _sentence_similarity(self, sent1: str, sent2: str) -> float:
-        """Calcola similarità tra due frasi."""
+        """Calculates similarity tra due frasi."""
         if not sent1 or not sent2:
             return 0.0
         
@@ -248,7 +248,7 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         return len(intersection) / len(union) if union else 0.0
     
     def _load_filler_words(self) -> Set[str]:
-        """Carica la lista di parole riempitive."""
+        """Loads la list di parole riempitive."""
         return {
             # Italiano
             'molto', 'abbastanza', 'piuttosto', 'davvero', 'veramente',
@@ -268,7 +268,7 @@ class SemanticCompressionStrategy(OptimizationStrategy):
         }
     
     def _load_redundant_phrases(self) -> Dict[str, str]:
-        """Carica le frasi ridondanti e le loro versioni semplificate."""
+        """Loads le frasi ridondanti e le loro versioni semplificate."""
         return {
             # Costrutti verbosi -> versioni concise
             r'in order to': 'to',
@@ -280,10 +280,10 @@ class SemanticCompressionStrategy(OptimizationStrategy):
             r'a small number of': 'few',
             
             # Italiano
-            r'al fine di': 'per',
-            r'allo scopo di': 'per',
+            r'al fine di': 'for',
+            r'allo scopo di': 'for',
             r'a causa del fatto che': 'perché',
-            r'nonostante il fatto che': 'anche se',
+            r'nonostante il fatto che': 'anche if',
             r'in questo momento': 'ora',
             r'un gran numero di': 'molti',
             r'un piccolo numero di': 'pochi',
@@ -298,12 +298,12 @@ class SemanticCompressionStrategy(OptimizationStrategy):
             # Riempitivi introduttivi
             r'as you can see,?': '',
             r'as mentioned before,?': '',
-            r'come si può vedere,?': '',
-            r'come menzionato prima,?': '',
+            r'how si può vedere,?': '',
+            r'how menzionato prima,?': '',
         }
     
     def _load_simplification_rules(self) -> Dict[str, str]:
-        """Carica le regole di semplificazione grammaticale."""
+        """Loads le regole di semplificazione grammaticale."""
         return {
             # Passive -> Active voice hints
             r'it is recommended that': 'recommend',
@@ -319,7 +319,7 @@ class SemanticCompressionStrategy(OptimizationStrategy):
             # Italiano
             r'prendere una decisione': 'decidere',
             r'dare considerazione a': 'considerare',
-            r'fare un\'analisi': 'analizzare',
+            r'fare un\'analysis': 'analizzare',
             
             # Costruzioni complesse
             r'there are many (.+?) that': r'many \1',

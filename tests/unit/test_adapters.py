@@ -1,5 +1,5 @@
 """
-Test unitari per gli adattatori LLM.
+Test unitari for gli adattatori LLM.
 """
 
 import pytest
@@ -11,16 +11,16 @@ from prompt_optimizer.adapters import (
 
 
 class TestOpenAIAdapter:
-    """Test per OpenAIAdapter."""
+    """Test for OpenAIAdapter."""
     
     def test_initialization_default(self):
-        """Test inizializzazione con modello default."""
+        """Test initialization with modello default."""
         adapter = OpenAIAdapter()
         assert adapter.model_name == "gpt-3.5-turbo"
         assert adapter.config is not None
     
     def test_initialization_custom_model(self):
-        """Test inizializzazione con modello personalizzato."""
+        """Test initialization with modello personalizzato."""
         adapter = OpenAIAdapter("gpt-4")
         assert adapter.model_name == "gpt-4"
         assert adapter.config.model_name == "gpt-4"
@@ -32,23 +32,23 @@ class TestOpenAIAdapter:
         assert isinstance(count, int)
     
     def test_count_tokens_empty(self, openai_adapter):
-        """Test conteggio token per stringa vuota."""
+        """Test conteggio token for string vuota."""
         count = openai_adapter.count_tokens("")
         assert count >= 0
     
     def test_calculate_cost(self, openai_adapter):
-        """Test calcolo costi."""
+        """Test calcolo costs."""
         cost = openai_adapter.calculate_cost(1000, 500)
         assert cost > 0
         assert isinstance(cost, float)
     
     def test_calculate_cost_zero_tokens(self, openai_adapter):
-        """Test calcolo costi con zero token."""
+        """Test calcolo costs with zero token."""
         cost = openai_adapter.calculate_cost(0, 0)
         assert cost == 0.0
     
     def test_optimize_for_model(self, openai_adapter, verbose_prompt):
-        """Test ottimizzazione specifica modello."""
+        """Test optimization specifica modello."""
         optimized = openai_adapter.optimize_for_model(verbose_prompt)
         assert isinstance(optimized, str)
         assert len(optimized) > 0
@@ -62,18 +62,18 @@ class TestOpenAIAdapter:
         assert 'adapter_type' in info
     
     def test_can_fit_in_context(self, openai_adapter, simple_prompt):
-        """Test verifica capacità contesto."""
+        """Test checks capacità contesto."""
         can_fit = openai_adapter.can_fit_in_context(simple_prompt)
         assert isinstance(can_fit, bool)
         assert can_fit is True  # Prompt semplice dovrebbe stare
     
     def test_estimate_context_usage(self, openai_adapter, simple_prompt):
-        """Test stima utilizzo contesto."""
+        """Test estimates utilizzo contesto."""
         usage = openai_adapter.estimate_context_usage(simple_prompt)
         assert 0.0 <= usage <= 1.0
     
     def test_suggest_optimizations(self, openai_adapter, verbose_prompt):
-        """Test suggerimenti ottimizzazione."""
+        """Test suggerimenti optimization."""
         suggestions = openai_adapter.suggest_optimizations(verbose_prompt)
         assert isinstance(suggestions, dict)
         assert 'current_tokens' in suggestions
@@ -81,7 +81,7 @@ class TestOpenAIAdapter:
         assert isinstance(suggestions['suggestions'], list)
     
     def test_calculate_cost_reduction(self, openai_adapter):
-        """Test calcolo riduzione costi."""
+        """Test calcolo reduction costs."""
         reduction = openai_adapter.calculate_cost_reduction(100)
         assert reduction > 0
         assert isinstance(reduction, float)
@@ -102,16 +102,16 @@ class TestOpenAIAdapter:
 
 
 class TestClaudeAdapter:
-    """Test per ClaudeAdapter."""
+    """Test for ClaudeAdapter."""
     
     def test_initialization_default(self):
-        """Test inizializzazione con modello default."""
+        """Test initialization with modello default."""
         adapter = ClaudeAdapter()
         assert adapter.model_name == "claude-3-sonnet"
         assert adapter.config is not None
     
     def test_initialization_custom_model(self):
-        """Test inizializzazione con modello personalizzato."""
+        """Test initialization with modello personalizzato."""
         adapter = ClaudeAdapter("claude-3-opus")
         assert adapter.model_name == "claude-3-opus"
         assert adapter.config.model_name == "claude-3-opus"
@@ -123,13 +123,13 @@ class TestClaudeAdapter:
         assert isinstance(count, int)
     
     def test_calculate_cost(self, claude_adapter):
-        """Test calcolo costi."""
+        """Test calcolo costs."""
         cost = claude_adapter.calculate_cost(1000, 500)
         assert cost > 0
         assert isinstance(cost, float)
     
     def test_optimize_for_model(self, claude_adapter, verbose_prompt):
-        """Test ottimizzazione specifica modello."""
+        """Test optimization specifica modello."""
         optimized = claude_adapter.optimize_for_model(verbose_prompt)
         assert isinstance(optimized, str)
         assert len(optimized) > 0
@@ -143,7 +143,7 @@ class TestClaudeAdapter:
         assert info['max_context_length'] >= 100000  # Claude ha contesto grande
     
     def test_suggest_optimizations(self, claude_adapter, complex_prompt):
-        """Test suggerimenti ottimizzazione."""
+        """Test suggerimenti optimization."""
         suggestions = claude_adapter.suggest_optimizations(complex_prompt)
         assert isinstance(suggestions, dict)
         assert 'current_tokens' in suggestions
@@ -165,10 +165,10 @@ class TestClaudeAdapter:
 
 
 class TestModelConfig:
-    """Test per ModelConfig."""
+    """Test for ModelConfig."""
     
     def test_initialization(self):
-        """Test inizializzazione."""
+        """Test initialization."""
         config = ModelConfig(
             model_name="test-model",
             max_context_length=4096,

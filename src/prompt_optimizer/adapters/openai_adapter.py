@@ -1,8 +1,8 @@
 """
-Adattatore per modelli OpenAI GPT (GPT-3.5, GPT-4, etc.).
+Adattatore for modelli OpenAI GPT (GPT-3.5, GPT-4, etc.).
 
 Gestisce il conteggio token accurato e le ottimizzazioni specifiche
-per i modelli GPT di OpenAI.
+for i modelli GPT di OpenAI.
 """
 
 import re
@@ -12,15 +12,15 @@ from .base import LLMAdapter, ModelConfig
 
 class OpenAIAdapter(LLMAdapter):
     """
-    Adattatore per modelli OpenAI GPT.
+    Adattatore for modelli OpenAI GPT.
     
-    Supporta modelli come GPT-3.5-turbo, GPT-4, GPT-4-turbo, etc.
-    con conteggio token accurato usando tiktoken quando disponibile.
+    Supporta modelli how GPT-3.5-turbo, GPT-4, GPT-4-turbo, etc.
+    with conteggio token accurato usando tiktoken when disponibile.
     """
     
     def __init__(self, model_name: str = "gpt-3.5-turbo", config: Optional[ModelConfig] = None):
         """
-        Inizializza l'adattatore OpenAI.
+        Initializes l'adattatore OpenAI.
         
         Args:
             model_name: Nome del modello OpenAI
@@ -31,10 +31,10 @@ class OpenAIAdapter(LLMAdapter):
     
     def count_tokens(self, text: str) -> int:
         """
-        Conta i token usando tiktoken se disponibile, altrimenti stima.
+        Conta i token usando tiktoken if disponibile, altrimenti estimates.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
             Numero di token
@@ -45,15 +45,15 @@ class OpenAIAdapter(LLMAdapter):
             try:
                 return len(self.tokenizer.encode(text))
             except Exception:
-                # Fallback se tiktoken fallisce
+                # Fallback if tiktoken fallisce
                 pass
         
-        # Stima basata su caratteristiche di GPT
+        # Estimates basata su caratteristiche di GPT
         return self._estimate_gpt_tokens(text)
     
     def calculate_cost(self, input_tokens: int, output_tokens: int = 0) -> float:
         """
-        Calcola il costo per i token di input e output.
+        Calculates il cost for i token di input e output.
         
         Args:
             input_tokens: Token di input
@@ -69,32 +69,32 @@ class OpenAIAdapter(LLMAdapter):
     
     def optimize_for_model(self, prompt: str) -> str:
         """
-        Applica ottimizzazioni specifiche per modelli GPT.
+        Applies ottimizzazioni specifiche for modelli GPT.
         
         Args:
-            prompt: Prompt da ottimizzare
+            prompt: Prompt from ottimizzare
             
         Returns:
-            Prompt ottimizzato per GPT
+            Prompt ottimizzato for GPT
         """
         optimized = prompt
         
-        # 1. Ottimizzazioni specifiche per GPT
+        # 1. Ottimizzazioni specifiche for GPT
         optimized = self._optimize_instruction_format(optimized)
         
         # 2. Rimuovi token speciali che potrebbero confondere il modello
         optimized = self._clean_special_tokens(optimized)
         
-        # 3. Ottimizza per il sistema di tokenizzazione GPT
+        # 3. Optimizes for il sistema di tokenizzazione GPT
         optimized = self._optimize_for_gpt_tokenizer(optimized)
         
-        # 4. Migliora la struttura per GPT
+        # 4. Migliora la struttura for GPT
         optimized = self._improve_gpt_structure(optimized)
         
         return optimized.strip()
     
     def _get_default_config(self) -> ModelConfig:
-        """Restituisce la configurazione di default basata sul modello."""
+        """Returns la configuration di default basata sul modello."""
         configs = {
             "gpt-3.5-turbo": ModelConfig(
                 model_name="gpt-3.5-turbo",
@@ -136,7 +136,7 @@ class OpenAIAdapter(LLMAdapter):
         return configs.get(self.model_name, configs["gpt-3.5-turbo"])
     
     def _initialize_tokenizer(self):
-        """Inizializza il tokenizer tiktoken se disponibile."""
+        """Initializes il tokenizer tiktoken if disponibile."""
         try:
             import tiktoken
             return tiktoken.get_encoding(self.config.tokenizer_name or "cl100k_base")
@@ -144,28 +144,28 @@ class OpenAIAdapter(LLMAdapter):
             # tiktoken non disponibile
             return None
         except Exception:
-            # Errore nell'inizializzazione
+            # Error nell'initialization
             return None
     
     def _estimate_gpt_tokens(self, text: str) -> int:
         """
-        Stima accurata dei token per modelli GPT senza tiktoken.
+        Estimates accurata dei token for modelli GPT without tiktoken.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
-            Stima dei token
+            Estimates dei token
         """
         # GPT tokenizer caratteristiche:
-        # - ~4 caratteri per token in media
+        # - ~4 caratteri for token in media
         # - Parole lunghe = più token
         # - Punteggiatura = spesso token separati
         
         # Conta caratteri base
         base_estimate = len(text) / 4
         
-        # Aggiustamenti per caratteristiche specifiche
+        # Aggiustamenti for caratteristiche specifiche
         words = text.split()
         
         # Parole lunghe tendono ad avere più token
@@ -184,12 +184,12 @@ class OpenAIAdapter(LLMAdapter):
         return max(1, int(total_estimate))
     
     def _optimize_instruction_format(self, prompt: str) -> str:
-        """Ottimizza il formato delle istruzioni per GPT."""
+        """Optimizes il formato delle istruzioni for GPT."""
         # GPT risponde meglio a istruzioni chiare e dirette
         
         # Migliora istruzioni ambigue
         optimized = re.sub(
-            r'\\b(please|kindly)\\s+(could you|would you|can you)\\s+',
+            r'\b(please|kindly)\s+(could you|would you|can you)\s+',
             '',
             prompt,
             flags=re.IGNORECASE
@@ -197,54 +197,54 @@ class OpenAIAdapter(LLMAdapter):
         
         # Semplifica richieste complesse
         optimized = re.sub(
-            r'\\bI would like you to\\b',
+            r'\bI would like you to\b',
             '',
             optimized,
             flags=re.IGNORECASE
         )
         
-        # Ottimizza per formato chat se necessario
+        # Optimizes for formato chat if necessario
         if self.model_name.startswith('gpt-3.5-turbo') or self.model_name.startswith('gpt-4'):
             optimized = self._optimize_for_chat_format(optimized)
         
         return optimized
     
     def _clean_special_tokens(self, prompt: str) -> str:
-        """Rimuove o sostituisce token che potrebbero confondere GPT."""
-        # Rimuovi sequenze che potrebbero essere interpretate come token speciali
+        """Removes o sostituisce token che potrebbero confondere GPT."""
+        # Rimuovi sequenze che potrebbero essere interpretate how token speciali
         
-        # Pulisci marcatori di fine testo
-        prompt = re.sub(r'<\\|endoftext\\|>', '', prompt)
-        prompt = re.sub(r'<\\|end\\|>', '', prompt)
+        # Pulisci marcatori di fine text
+        prompt = re.sub(r'<\|endoftext\|>', '', prompt)
+        prompt = re.sub(r'<\|end\|>', '', prompt)
         
         # Pulisci altri token speciali comuni
-        prompt = re.sub(r'<\\|.*?\\|>', '', prompt)
+        prompt = re.sub(r'<\|.*?\|>', '', prompt)
         
         return prompt
     
     def _optimize_for_gpt_tokenizer(self, prompt: str) -> str:
-        """Ottimizza per il tokenizer GPT specifico."""
+        """Optimizes for il tokenizer GPT specifico."""
         # GPT tokenizer gestisce meglio certi pattern
         
-        # Ottimizza spazi e punteggiatura
+        # Optimizes spazi e punteggiatura
         # Il tokenizer GPT è sensibile agli spazi prima della punteggiatura
-        prompt = re.sub(r'\\s+([,.!?;:])', r'\\1', prompt)
+        prompt = re.sub(r'\s+([,.!?;:])', r'\1', prompt)
         
-        # Ottimizza apostrofi e contrazioni
-        prompt = re.sub(r'\\s+\\'\\s*([st])\\b', r\"'\\1\", prompt)
+        # Optimizes apostrofi e contrazioni
+        prompt = re.sub(r"\s+'\s*([st])\b", r"'\1", prompt)
         
-        # Ottimizza numeri
-        prompt = re.sub(r'\\b(\\d+)\\s+(\\d+)\\b', r'\\1\\2', prompt)
+        # Optimizes numeri
+        prompt = re.sub(r'\b(\d+)\s+(\d+)\b', r'\1\2', prompt)
         
         return prompt
     
     def _improve_gpt_structure(self, prompt: str) -> str:
-        """Migliora la struttura per GPT."""
-        # GPT funziona meglio con strutture chiare
+        """Migliora la struttura for GPT."""
+        # GPT funziona meglio with strutture chiare
         
         # Se il prompt ha sezioni multiple, assicurati che siano ben separate
-        if '\\n\\n' in prompt:
-            sections = prompt.split('\\n\\n')
+        if '\n\n' in prompt:
+            sections = prompt.split('\n\n')
             # Assicurati che ogni sezione inizi in modo chiaro
             improved_sections = []
             for section in sections:
@@ -252,17 +252,17 @@ class OpenAIAdapter(LLMAdapter):
                 if section:
                     improved_sections.append(section)
             
-            prompt = '\\n\\n'.join(improved_sections)
+            prompt = '\n\n'.join(improved_sections)
         
         return prompt
     
     def _optimize_for_chat_format(self, prompt: str) -> str:
-        """Ottimizza per il formato chat di GPT."""
-        # I modelli chat funzionano meglio con istruzioni dirette
+        """Optimizes for il formato chat di GPT."""
+        # I modelli chat funzionano meglio with istruzioni dirette
         
         # Rimuovi cortesie eccessive
         chat_optimized = re.sub(
-            r'\\b(thank you|thanks)\\b.*?[.!]\\s*',
+            r'\b(thank you|thanks)\b.*?[.!]\s*',
             '',
             prompt,
             flags=re.IGNORECASE
@@ -270,10 +270,10 @@ class OpenAIAdapter(LLMAdapter):
         
         # Semplifica il linguaggio
         replacements = {
-            r'\\bcould you please\\b': '',
-            r'\\bwould you mind\\b': '',
-            r'\\bif possible\\b': '',
-            r'\\bI would appreciate if\\b': '',
+            r'\bcould you please\b': '',
+            r'\bwould you mind\b': '',
+            r'\bif possible\b': '',
+            r'\bI would appreciate if\b': '',
         }
         
         for pattern, replacement in replacements.items():
@@ -282,17 +282,17 @@ class OpenAIAdapter(LLMAdapter):
         return chat_optimized
     
     def suggest_optimizations(self, prompt: str) -> Dict[str, Any]:
-        """Suggerisce ottimizzazioni specifiche per GPT."""
+        """Suggerisce ottimizzazioni specifiche for GPT."""
         suggestions = super().suggest_optimizations(prompt)
         
-        # Aggiungi suggerimenti specifici per GPT
+        # Aggiungi suggerimenti specifici for GPT
         token_count = self.count_tokens(prompt)
         
-        # Suggerimenti per modelli GPT specifici
+        # Suggerimenti for modelli GPT specifici
         if self.model_name == "gpt-4" and token_count > 6000:
             suggestions['suggestions'].append({
                 'type': 'model_recommendation',
-                'message': 'Considera l\\'uso di GPT-4-turbo per prompt lunghi per ridurre i costi',
+                'message': 'Considera l\'uso di GPT-4-turbo for prompt lunghi for ridurre i costs',
                 'severity': 'medium'
             })
         
@@ -303,11 +303,11 @@ class OpenAIAdapter(LLMAdapter):
                 'severity': 'high'
             })
         
-        # Suggerimenti per ottimizzazione formato
-        if len(re.findall(r'\\bplease\\b', prompt, re.IGNORECASE)) > 2:
+        # Suggerimenti for optimization formato
+        if len(re.findall(r'\bplease\b', prompt, re.IGNORECASE)) > 2:
             suggestions['suggestions'].append({
                 'type': 'format_optimization',
-                'message': 'Riduci le cortesie eccessive (\"please\") per prompt più efficienti',
+                'message': 'Riduci le cortesie eccessive ("please") for prompt più efficienti',
                 'severity': 'low'
             })
         

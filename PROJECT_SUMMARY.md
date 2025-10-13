@@ -1,168 +1,168 @@
-# 📋 Riepilogo Progetto: Prompt Optimizer
+# 📋 Project Summary: Prompt Optimizer
 
-## 🎯 Obiettivo del Progetto
+## 🎯 Project Goal
 
-Prompt Optimizer è un pacchetto Python professionale per l'ottimizzazione automatica dei prompt LLM. L'obiettivo è **ridurre i costi e migliorare l'efficacia** dei prompt trasformando il linguaggio naturale verboso in input LLM-friendly ottimizzati.
+Prompt Optimizer is a professional Python package for automatic LLM prompt optimization. The goal is to **reduce costs and improve effectiveness** of prompts by transforming verbose natural language into optimized LLM-friendly input.
 
-## ✅ Stato Completamento: 100%
+## ✅ Completion Status: 100%
 
-Tutte le funzionalità core sono state implementate e il progetto è pronto per l'uso e il deployment.
+All core features have been implemented and the project is ready for use and deployment.
 
-## 📦 Struttura del Progetto
+## 📦 Project Structure
 
 ```
 prompt-optimizer/
-├── LICENSE                          # Licenza MIT
-├── README.md                        # Documentazione completa
-├── PROJECT_SUMMARY.md              # Questo file
-├── pyproject.toml                  # Configurazione pacchetto
+├── LICENSE                          # MIT License
+├── README.md                        # Complete documentation
+├── PROJECT_SUMMARY.md              # This file
+├── pyproject.toml                  # Package configuration
 │
-├── src/prompt_optimizer/           # Codice sorgente principale
-│   ├── __init__.py                 # Esportazioni pubbliche
-│   ├── core.py                     # Classe PromptOptimizer
-│   ├── metrics.py                  # Metriche (token, semantica)
+├── src/prompt_optimizer/           # Main source code
+│   ├── __init__.py                 # Public exports
+│   ├── core.py                     # PromptOptimizer class
+│   ├── metrics.py                  # Metrics (tokens, semantic)
 │   │
-│   ├── strategies/                 # Strategie di ottimizzazione
+│   ├── strategies/                 # Optimization strategies
 │   │   ├── __init__.py
-│   │   ├── base.py                # Classe base astratta
-│   │   ├── semantic_compression.py # Compressione semantica
-│   │   ├── token_reduction.py     # Riduzione token
-│   │   └── structural_optimization.py # Ottimizzazione struttura
+│   │   ├── base.py                # Abstract base class
+│   │   ├── semantic_compression.py # Semantic compression
+│   │   ├── token_reduction.py     # Token reduction
+│   │   └── structural_optimization.py # Structure optimization
 │   │
-│   └── adapters/                   # Adattatori LLM specifici
+│   └── adapters/                   # LLM-specific adapters
 │       ├── __init__.py
-│       ├── base.py                # Classe base astratta
-│       ├── openai_adapter.py      # Supporto GPT
-│       └── claude_adapter.py      # Supporto Claude
+│       ├── base.py                # Abstract base class
+│       ├── openai_adapter.py      # GPT support
+│       └── claude_adapter.py      # Claude support
 │
-└── examples/                       # Esempi pratici
-    ├── basic_usage.py             # Utilizzo base
-    └── model_comparison.py        # Confronto modelli
+└── examples/                       # Practical examples
+    ├── basic_usage.py             # Basic usage
+    └── model_comparison.py        # Model comparison
 ```
 
-## 🚀 Funzionalità Implementate
+## 🚀 Implemented Features
 
 ### 1. Core Engine (`core.py`)
-- ✅ Classe `PromptOptimizer` centrale
-- ✅ Orchestrazione strategie multiple
-- ✅ Sistema di validazione semantica
-- ✅ Supporto ottimizzazione batch
-- ✅ Metriche dettagliate per ogni ottimizzazione
+- ✅ Central `PromptOptimizer` class
+- ✅ Multiple strategies orchestration
+- ✅ Semantic validation system
+- ✅ Batch optimization support
+- ✅ Detailed metrics for each optimization
 
-### 2. Strategie di Ottimizzazione
+### 2. Optimization Strategies
 
 #### SemanticCompressionStrategy
-- ✅ Rimozione parole riempitive (very, really, actually, etc.)
-- ✅ Eliminazione frasi ridondanti
-- ✅ Semplificazione costrutti grammaticali complessi
-- ✅ Condensazione di frasi semanticamente equivalenti
-- ✅ Supporto bilingue (IT/EN)
+- ✅ Removal of filler words (very, really, actually, etc.)
+- ✅ Elimination of redundant phrases
+- ✅ Simplification of complex grammatical constructs
+- ✅ Condensation of semantically equivalent sentences
+- ✅ Bilingual support (IT/EN)
 
 #### TokenReductionStrategy
-- ✅ Abbreviazioni standard (information → info, maximum → max)
-- ✅ Contrazioni grammaticali (do not → don't, will not → won't)
-- ✅ Simbolizzazione (and → &, at → @, plus → +)
-- ✅ Ottimizzazione numeri e date
-- ✅ Rimozione parole non essenziali contestuale
+- ✅ Standard abbreviations (information → info, maximum → max)
+- ✅ Grammatical contractions (do not → don't, will not → won't)
+- ✅ Symbolization (and → &, at → @, plus → +)
+- ✅ Optimization of numbers and dates
+- ✅ Contextual removal of non-essential words
 
 #### StructuralOptimizationStrategy
-- ✅ Analisi e categorizzazione automatica sezioni
-- ✅ Riorganizzazione logica (Context → Instructions → Constraints → Examples → Output)
-- ✅ Consolidamento istruzioni duplicate
-- ✅ Formattazione LLM-friendly
-- ✅ Ottimizzazione punteggiatura e spaziatura
+- ✅ Automatic section analysis and categorization
+- ✅ Logical reorganization (Context → Instructions → Constraints → Examples → Output)
+- ✅ Consolidation of duplicate instructions
+- ✅ LLM-friendly formatting
+- ✅ Optimization of punctuation and spacing
 
-### 3. Adattatori Modelli LLM
+### 3. LLM Model Adapters
 
 #### OpenAIAdapter
-- ✅ Supporto GPT-3.5-turbo, GPT-4, GPT-4-turbo, GPT-4o
-- ✅ Conteggio token accurato con tiktoken
-- ✅ Calcolo costi preciso per modello
-- ✅ Ottimizzazioni specifiche GPT (formato chat, token speciali)
-- ✅ Suggerimenti intelligenti per ottimizzazione
-- ✅ Fallback quando tiktoken non disponibile
+- ✅ Support for GPT-3.5-turbo, GPT-4, GPT-4-turbo, GPT-4o
+- ✅ Accurate token counting with tiktoken
+- ✅ Precise cost calculation per model
+- ✅ GPT-specific optimizations (chat format, special tokens)
+- ✅ Intelligent optimization suggestions
+- ✅ Fallback when tiktoken not available
 
 #### ClaudeAdapter
-- ✅ Supporto Claude 2, Claude 3 (Haiku, Sonnet, Opus, 3.5-Sonnet)
-- ✅ Stima token accurata per Claude
-- ✅ Calcolo costi per modello
-- ✅ Supporto XML tags per strutturazione
-- ✅ Ottimizzazioni specifiche Claude (step-by-step reasoning)
-- ✅ Suggerimenti per miglior utilizzo contesto
+- ✅ Support for Claude 2, Claude 3 (Haiku, Sonnet, Opus, 3.5-Sonnet)
+- ✅ Accurate token estimation for Claude
+- ✅ Cost calculation per model
+- ✅ XML tags support for structuring
+- ✅ Claude-specific optimizations (step-by-step reasoning)
+- ✅ Suggestions for better context utilization
 
-### 4. Sistema Metriche
+### 4. Metrics System
 
 #### TokenMetrics
-- ✅ Analisi dettagliata distribuzione token
-- ✅ Calcolo ridondanza e verbosità
-- ✅ Potenziale di riduzione
-- ✅ Stima token per modello
-- ✅ Identificazione pattern riducibili
+- ✅ Detailed token distribution analysis
+- ✅ Redundancy and verbosity calculation
+- ✅ Reduction potential
+- ✅ Token estimation per model
+- ✅ Identification of reducible patterns
 
 #### SemanticMetrics
-- ✅ Calcolo similarità semantica (TF-IDF + cosine similarity)
-- ✅ Analisi densità semantica
-- ✅ Score coerenza testuale
-- ✅ Calcolo complessità
-- ✅ Estrazione concetti chiave
+- ✅ Semantic similarity calculation (TF-IDF + cosine similarity)
+- ✅ Semantic density analysis
+- ✅ Textual coherence score
+- ✅ Complexity calculation
+- ✅ Key concept extraction
 
-## 💡 Caratteristiche Distintive
+## 💡 Distinctive Features
 
 ### Design Patterns
-- **Strategy Pattern**: Strategie di ottimizzazione modulari e intercambiabili
-- **Adapter Pattern**: Supporto multipli LLM con interfaccia uniforme
-- **Template Method**: Classe base con hook per personalizzazione
+- **Strategy Pattern**: Modular and interchangeable optimization strategies
+- **Adapter Pattern**: Multiple LLM support with uniform interface
+- **Template Method**: Base class with hooks for customization
 
 ### Best Practices
-- ✅ Type hints completi
-- ✅ Docstrings dettagliate
-- ✅ Logging strutturato
-- ✅ Error handling robusto
-- ✅ Configurazione flessibile
-- ✅ Codice testabile e modulare
+- ✅ Complete type hints
+- ✅ Detailed docstrings
+- ✅ Structured logging
+- ✅ Robust error handling
+- ✅ Flexible configuration
+- ✅ Testable and modular code
 
 ### Performance
-- ✅ Algoritmi ottimizzati per velocità
-- ✅ Caching interno dove appropriato
-- ✅ Supporto ottimizzazione batch
-- ✅ Lazy loading dei tokenizer
+- ✅ Speed-optimized algorithms
+- ✅ Internal caching where appropriate
+- ✅ Batch optimization support
+- ✅ Lazy loading of tokenizers
 
-## 📊 Risultati Attesi
+## 📊 Expected Results
 
-Benchmark stimati su prompt tipici:
+Estimated benchmarks on typical prompts:
 
-| Metrica | Valore Medio |
+| Metric | Average Value |
 |---------|--------------|
-| Riduzione Token | 20-35% |
-| Similarità Semantica | >90% |
-| Tempo Ottimizzazione | <0.5s |
-| Riduzione Costi | 20-35% |
+| Token Reduction | 20-35% |
+| Semantic Similarity | >90% |
+| Optimization Time | <0.5s |
+| Cost Reduction | 20-35% |
 
-### Esempio Pratico
+### Practical Example
 
-**Prompt Originale** (45 token):
+**Original Prompt** (45 tokens):
 ```
 Please could you very kindly take the time to analyze the following 
 text and provide a very detailed explanation of the main concepts. 
 Thank you very much for your help.
 ```
 
-**Prompt Ottimizzato** (12 token):
+**Optimized Prompt** (12 tokens):
 ```
 Analyze this text and explain the main concepts.
 ```
 
-**Risultato**: 73% riduzione token, 92% similarità semantica
+**Result**: 73% token reduction, 92% semantic similarity
 
-## 🔧 Setup e Utilizzo
+## 🔧 Setup and Usage
 
-### Installazione
+### Installation
 ```bash
 cd prompt-optimizer
 pip install -e .
 ```
 
-### Utilizzo Base
+### Basic Usage
 ```python
 from prompt_optimizer import PromptOptimizer
 from prompt_optimizer.adapters import OpenAIAdapter
@@ -177,77 +177,77 @@ result = optimizer.optimize("Your verbose prompt here")
 print(f"Saved {result.token_reduction} tokens!")
 ```
 
-## 🎓 Casi d'Uso
+## 🎓 Use Cases
 
-### 1. Riduzione Costi API
-Ideale per applicazioni con alto volume di richieste LLM dove ogni token risparmiato si traduce in risparmio significativo.
+### 1. API Cost Reduction
+Ideal for applications with high volume of LLM requests where every saved token translates into significant savings.
 
-### 2. Ottimizzazione Prompt Engineering
-Strumento per prompt engineer per testare e ottimizzare prompt mantenendo efficacia.
+### 2. Prompt Engineering Optimization
+Tool for prompt engineers to test and optimize prompts while maintaining effectiveness.
 
-### 3. Preprocessing Automatico
-Integrazione in pipeline CI/CD per ottimizzare automaticamente prompt prima del deployment.
+### 3. Automatic Preprocessing
+Integration into CI/CD pipelines to automatically optimize prompts before deployment.
 
-### 4. Analisi e Benchmark
-Confronto efficacia prompt tra diversi modelli e strategie di ottimizzazione.
+### 4. Analysis and Benchmarking
+Comparison of prompt effectiveness across different models and optimization strategies.
 
-## 📈 Prossimi Sviluppi Possibili
+## 📈 Possible Future Developments
 
-### Breve Termine
-- [ ] Test suite completa (pytest)
-- [ ] Supporto più LLM (Llama, Mistral, Gemini)
-- [ ] CLI per uso da terminale
-- [ ] Web UI per testing interattivo
+### Short Term
+- [ ] Complete test suite (pytest)
+- [ ] More LLM support (Llama, Mistral, Gemini)
+- [ ] CLI for terminal usage
+- [ ] Web UI for interactive testing
 
-### Medio Termine
-- [ ] Cache risultati ottimizzazione
+### Medium Term
+- [ ] Optimization results caching
 - [ ] ML-based optimization
 - [ ] A/B testing framework
-- [ ] Integrazione LangChain/LlamaIndex
+- [ ] LangChain/LlamaIndex integration
 
-### Lungo Termine
-- [ ] Prompt multimodali
-- [ ] Fine-tuning modelli per ottimizzazione
-- [ ] SaaS API pubblica
-- [ ] Plugin IDE (VSCode, PyCharm)
+### Long Term
+- [ ] Multimodal prompts
+- [ ] Model fine-tuning for optimization
+- [ ] Public SaaS API
+- [ ] IDE plugins (VSCode, PyCharm)
 
-## 🤝 Contributi
+## 🤝 Contributions
 
-Il progetto è strutturato per facilitare contributi:
+The project is structured to facilitate contributions:
 
-1. **Nuove strategie**: Estendere `OptimizationStrategy`
-2. **Nuovi adattatori**: Estendere `LLMAdapter`
-3. **Metriche custom**: Estendere `TokenMetrics` o `SemanticMetrics`
-4. **Miglioramenti**: PR benvenute su GitHub
+1. **New strategies**: Extend `OptimizationStrategy`
+2. **New adapters**: Extend `LLMAdapter`
+3. **Custom metrics**: Extend `TokenMetrics` or `SemanticMetrics`
+4. **Improvements**: PRs welcome on GitHub
 
-## 📝 Note Tecniche
+## 📝 Technical Notes
 
-### Dipendenze Principali
-- `tiktoken`: Token counting per GPT (opzionale)
-- `transformers`: Modelli NLP
+### Main Dependencies
+- `tiktoken`: Token counting for GPT (optional)
+- `transformers`: NLP models
 - `nltk`: Text processing
-- `scikit-learn`: Metriche semantiche
-- `numpy`: Calcoli numerici
+- `scikit-learn`: Semantic metrics
+- `numpy`: Numerical computations
 
 ### Python Version
-- Minimo: Python 3.8
-- Testato: Python 3.8, 3.9, 3.10, 3.11, 3.12
+- Minimum: Python 3.8
+- Tested: Python 3.8, 3.9, 3.10, 3.11, 3.12
 
-### Licenza
-MIT License - Uso commerciale e personale libero
+### License
+MIT License - Free for commercial and personal use
 
-## 🎉 Conclusioni
+## 🎉 Conclusions
 
-Prompt Optimizer è un progetto **production-ready** che fornisce:
+Prompt Optimizer is a **production-ready** project that provides:
 
-✅ **Valore Immediato**: Risparmio costi misurabile fin dal primo utilizzo  
-✅ **Flessibilità**: Sistema modulare facilmente estendibile  
-✅ **Qualità**: Codice ben strutturato e documentato  
-✅ **Scalabilità**: Architettura progettata per crescita  
+✅ **Immediate Value**: Measurable cost savings from first use  
+✅ **Flexibility**: Modular system easily extensible  
+✅ **Quality**: Well-structured and documented code  
+✅ **Scalability**: Architecture designed for growth  
 
-Il progetto è pronto per essere usato, testato e deployato in ambienti reali.
+The project is ready to be used, tested and deployed in real environments.
 
 ---
 
-**Sviluppato con ❤️ per la community AI italiana**  
-Data completamento: 13 Ottobre 2025
+**Developed with ❤️ for the AI community**  
+Completion date: October 13, 2025

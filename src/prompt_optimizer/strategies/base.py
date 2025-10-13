@@ -1,5 +1,5 @@
 """
-Classi base per le strategie di ottimizzazione dei prompt.
+Classi base for le strategie di optimization dei prompt.
 
 Definisce l'interfaccia comune che tutte le strategie devono implementare.
 """
@@ -11,7 +11,7 @@ from dataclasses import dataclass
 
 @dataclass
 class OptimizationConfig:
-    """Configurazione per una strategia di ottimizzazione."""
+    """Configurazione for una strategy di optimization."""
     
     aggressive_mode: bool = False
     preserve_structure: bool = True
@@ -25,18 +25,18 @@ class OptimizationConfig:
 
 class OptimizationStrategy(ABC):
     """
-    Classe base per tutte le strategie di ottimizzazione dei prompt.
+    Class base for tutte le strategie di optimization dei prompt.
     
-    Ogni strategia implementa una tecnica specifica per ottimizzare
+    Ogni strategy implementa una tecnica specifica for ottimizzare
     i prompt mantenendo il significato semantico.
     """
     
     def __init__(self, config: Optional[OptimizationConfig] = None):
         """
-        Inizializza la strategia di ottimizzazione.
+        Initializes la strategy di optimization.
         
         Args:
-            config: Configurazione per la strategia
+            config: Configurazione for la strategy
         """
         self.config = config or OptimizationConfig()
         self.name = self.__class__.__name__
@@ -44,13 +44,13 @@ class OptimizationStrategy(ABC):
     @abstractmethod
     def apply(self, prompt: str) -> str:
         """
-        Applica la strategia di ottimizzazione al prompt.
+        Applies la strategy di optimization al prompt.
         
         Args:
-            prompt: Il prompt originale da ottimizzare
+            prompt: Il original prompt from ottimizzare
             
         Returns:
-            Il prompt ottimizzato
+            Il optimized prompt
             
         Raises:
             ValueError: Se il prompt non può essere ottimizzato
@@ -60,36 +60,36 @@ class OptimizationStrategy(ABC):
     @abstractmethod
     def estimate_reduction(self, prompt: str) -> float:
         """
-        Stima la riduzione percentuale di token che questa strategia
+        Estimates la reduction percentuale di token che questa strategy
         può ottenere sul prompt dato.
         
         Args:
-            prompt: Il prompt da analizzare
+            prompt: Il prompt from analizzare
             
         Returns:
-            Stima della riduzione percentuale (0.0-1.0)
+            Estimates della reduction percentuale (0.0-1.0)
         """
         pass
     
     @abstractmethod
     def can_apply(self, prompt: str) -> bool:
         """
-        Determina se questa strategia può essere applicata al prompt dato.
+        Determines if questa strategy può essere applicata al prompt dato.
         
         Args:
-            prompt: Il prompt da analizzare
+            prompt: Il prompt from analizzare
             
         Returns:
-            True se la strategia può essere applicata, False altrimenti
+            True if la strategy può essere applicata, False altrimenti
         """
         pass
     
     def get_metadata(self) -> Dict[str, Any]:
         """
-        Restituisce metadata sulla strategia.
+        Returns metadata sulla strategy.
         
         Returns:
-            Dizionario con informazioni sulla strategia
+            Dizionario with informazioni sulla strategy
         """
         return {
             'name': self.name,
@@ -102,27 +102,27 @@ class OptimizationStrategy(ABC):
         Valida che il prompt sia utilizzabile.
         
         Args:
-            prompt: Il prompt da validare
+            prompt: Il prompt from validare
             
         Raises:
             ValueError: Se il prompt non è valido
         """
         if not isinstance(prompt, str):
-            raise ValueError("Il prompt deve essere una stringa")
+            raise ValueError("Il prompt deve essere una string")
         
         if not prompt.strip():
             raise ValueError("Il prompt non può essere vuoto")
     
     def _count_words(self, text: str) -> int:
-        """Conta le parole in un testo."""
+        """Conta le parole in un text."""
         return len(text.split())
     
     def _count_characters(self, text: str) -> int:
-        """Conta i caratteri in un testo (esclusi spazi)."""
+        """Conta i caratteri in un text (esclusi spazi)."""
         return len(text.replace(' ', ''))
     
     def _calculate_reduction_percentage(self, original: str, optimized: str) -> float:
-        """Calcola la percentuale di riduzione tra due testi."""
+        """Calculates la percentuale di reduction tra due testi."""
         original_length = len(original)
         if original_length == 0:
             return 0.0

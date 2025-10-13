@@ -5,7 +5,7 @@ build-backend = "hatchling.build"
 [project]
 name = "prompt-optimizer"
 version = "0.1.0"
-description = "Un pacchetto Python per l'ottimizzazione semantica e di token dei prompt LLM"
+description = "A Python package for semantic and token optimization of LLM prompts"
 readme = "README.md"
 requires-python = ">=3.8"
 license = "MIT"
@@ -50,8 +50,8 @@ docs = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/yourusername/prompt-optimizer"
-"Bug Tracker" = "https://github.com/yourusername/prompt-optimizer/issues"
+"Homepage" = "https://github.com/0xtvignoli/prompt-optimizer"
+"Bug Tracker" = "https://github.com/0xtvignoli/prompt-optimizer/issues"
 "Documentation" = "https://prompt-optimizer.readthedocs.io"
 
 [project.scripts]

@@ -1,10 +1,10 @@
 """
-Modulo per il calcolo delle metriche di ottimizzazione.
+Module for il calcolo delle metriche di optimization.
 
-Fornisce strumenti per misurare:
+Provides strumenti for misurare:
 - Riduzione dei token
-- Similarità semantica
-- Performance dell'ottimizzazione
+- Similarità semantic
+- Performance dell'optimization
 - Costi stimati
 """
 
@@ -29,7 +29,7 @@ class TokenAnalysis:
 
 @dataclass
 class SemanticAnalysis:
-    """Analisi semantica di un testo."""
+    """Analisi semantic di un text."""
     
     semantic_density: float
     coherence_score: float
@@ -38,22 +38,22 @@ class SemanticAnalysis:
 
 
 class TokenMetrics:
-    """Classe per il calcolo delle metriche relative ai token."""
+    """Class for il calcolo delle metriche relative ai token."""
     
     def __init__(self):
         self.stop_words = self._load_stop_words()
     
     def analyze_tokens(self, text: str) -> TokenAnalysis:
         """
-        Analizza i token in un testo.
+        Analyzes i token in un text.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
-            TokenAnalysis con i dettagli dell'analisi
+            TokenAnalysis with i dettagli dell'analysis
         """
-        # Tokenizzazione semplice (può essere migliorata con modelli specifici)
+        # Tokenizzazione semplice (può essere migliorata with modelli specifici)
         tokens = self._tokenize(text)
         
         total_tokens = len(tokens)
@@ -81,17 +81,17 @@ class TokenMetrics:
     
     def calculate_reduction_potential(self, text: str) -> float:
         """
-        Calcola il potenziale di riduzione dei token.
+        Calculates il potenziale di reduction dei token.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
-            Score tra 0 e 1 che indica il potenziale di riduzione
+            Score tra 0 e 1 che indica il potenziale di reduction
         """
         analysis = self.analyze_tokens(text)
         
-        # Fattori che indicano potenziale di riduzione:
+        # Fattori che indicano potenziale di reduction:
         # - Alta ridondanza
         # - Molte parole vuote
         # - Frasi ripetitive
@@ -107,18 +107,18 @@ class TokenMetrics:
     
     def estimate_token_count(self, text: str, model_type: str = "gpt") -> int:
         """
-        Stima il numero di token per diversi modelli.
+        Estimates il numero di token for diversi modelli.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             model_type: Tipo di modello ("gpt", "claude", "llama")
             
         Returns:
-            Stima del numero di token
+            Estimates del numero di token
         """
         # Stime approssimative basate su caratteristiche del modello
         if model_type.lower() == "gpt":
-            # GPT: circa 4 caratteri per token
+            # GPT: circa 4 caratteri for token
             return len(text) // 4
         elif model_type.lower() == "claude":
             # Claude: simile a GPT ma leggermente diverso
@@ -131,19 +131,19 @@ class TokenMetrics:
             return len(text.split())
     
     def _tokenize(self, text: str) -> List[str]:
-        """Tokenizzazione semplice del testo."""
-        # Rimozione punteggiatura e divisione per spazi
+        """Tokenizzazione semplice del text."""
+        # Rimozione punteggiatura e divisione for spazi
         text = re.sub(r'[^\w\s]', ' ', text.lower())
         return [token for token in text.split() if token and len(token) > 1]
     
     def _load_stop_words(self) -> set:
-        """Carica una lista di stop words comuni."""
+        """Loads una list di stop words comuni."""
         # Lista base di stop words (può essere espansa)
         return {
             'il', 'la', 'le', 'lo', 'gli', 'i', 'un', 'una', 'uno',
-            'di', 'da', 'a', 'in', 'su', 'per', 'con', 'tra', 'fra',
-            'e', 'o', 'ma', 'però', 'anche', 'se', 'quando', 'come',
-            'che', 'cui', 'dove', 'chi', 'cosa', 'quanto', 'quale',
+            'di', 'from', 'a', 'in', 'su', 'for', 'with', 'tra', 'fra',
+            'e', 'o', 'ma', 'però', 'anche', 'if', 'when', 'how',
+            'che', 'cui', 'where', 'chi', 'cosa', 'quanto', 'quale',
             'the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at',
             'to', 'for', 'of', 'with', 'by', 'from', 'up', 'about',
             'into', 'through', 'during', 'before', 'after', 'above',
@@ -153,7 +153,7 @@ class TokenMetrics:
         }
     
     def _calculate_verbosity(self, text: str) -> float:
-        """Calcola un punteggio di verbosità del testo."""
+        """Calculates un punteggio di verbosità del text."""
         words = text.split()
         if not words:
             return 0.0
@@ -177,12 +177,12 @@ class TokenMetrics:
         return max(0, min(verbosity, 1))
     
     def _calculate_repetition(self, text: str) -> float:
-        """Calcola un punteggio di ripetizione nel testo."""
+        """Calculates un punteggio di ripetizione nel text."""
         sentences = text.split('.')
         if len(sentences) < 2:
             return 0.0
         
-        # Calcola similarità tra frasi consecutive
+        # Calculates similarity tra frasi consecutive
         similarities = []
         for i in range(len(sentences) - 1):
             sim = self._sentence_similarity(sentences[i].strip(), sentences[i+1].strip())
@@ -191,7 +191,7 @@ class TokenMetrics:
         return sum(similarities) / len(similarities) if similarities else 0.0
     
     def _sentence_similarity(self, sent1: str, sent2: str) -> float:
-        """Calcola similarità tra due frasi."""
+        """Calculates similarity tra due frasi."""
         if not sent1 or not sent2:
             return 0.0
         
@@ -208,49 +208,49 @@ class TokenMetrics:
 
 
 class SemanticMetrics:
-    """Classe per il calcolo delle metriche semantiche."""
+    """Class for il calcolo delle metriche semantiche."""
     
     def __init__(self):
         self.vectorizer = TfidfVectorizer(
             max_features=1000,
-            stop_words='english',  # Può essere esteso per italiano
+            stop_words='english',  # Può essere esteso for italiano
             ngram_range=(1, 2)
         )
     
     def calculate_similarity(self, text1: str, text2: str) -> float:
         """
-        Calcola la similarità semantica tra due testi.
+        Calculates la similarity semantic tra due testi.
         
         Args:
-            text1: Primo testo
-            text2: Secondo testo
+            text1: Primo text
+            text2: Secondo text
             
         Returns:
-            Score di similarità tra 0 e 1
+            Score di similarity tra 0 e 1
         """
         if not text1 or not text2:
             return 0.0
         
         try:
-            # Usa TF-IDF per la vectorizzazione
+            # Usa TF-IDF for la vectorizzazione
             vectors = self.vectorizer.fit_transform([text1, text2])
             similarity_matrix = cosine_similarity(vectors)
             
             return float(similarity_matrix[0, 1])
         
         except Exception:
-            # Fallback con similarità basata su parole
+            # Fallback with similarity basata su parole
             return self._word_overlap_similarity(text1, text2)
     
     def analyze_semantic_content(self, text: str) -> SemanticAnalysis:
         """
-        Analizza il contenuto semantico di un testo.
+        Analyzes il contenuto semantico di un text.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
-            SemanticAnalysis con i dettagli dell'analisi
+            SemanticAnalysis with i dettagli dell'analysis
         """
         semantic_density = self._calculate_semantic_density(text)
         coherence_score = self._calculate_coherence(text)
@@ -265,7 +265,7 @@ class SemanticMetrics:
         )
     
     def _word_overlap_similarity(self, text1: str, text2: str) -> float:
-        """Calcola similarità basata sulla sovrapposizione di parole."""
+        """Calculates similarity basata sulla sovrapposizione di parole."""
         words1 = set(text1.lower().split())
         words2 = set(text2.lower().split())
         
@@ -278,12 +278,12 @@ class SemanticMetrics:
         return len(intersection) / len(union) if union else 0.0
     
     def _calculate_semantic_density(self, text: str) -> float:
-        """Calcola la densità semantica del testo."""
+        """Calculates la densità semantic del text."""
         words = text.split()
         if not words:
             return 0.0
         
-        # Stima basata su:
+        # Estimates basata su:
         # - Rapporto sostantivi/verbi vs parole funzionali
         # - Presenza di termini tecnici/specifici
         # - Varietà lessicale
@@ -293,16 +293,16 @@ class SemanticMetrics:
         
         lexical_diversity = unique_words / total_words if total_words > 0 else 0
         
-        # Stima semplificata della densità semantica
+        # Estimates semplificata della densità semantic
         return min(lexical_diversity * 2, 1.0)
     
     def _calculate_coherence(self, text: str) -> float:
-        """Calcola la coerenza del testo."""
+        """Calculates la coerenza del text."""
         sentences = text.split('.')
         if len(sentences) < 2:
             return 1.0
         
-        # Calcola coerenza basata su connettori logici e ripetizione di concetti
+        # Calculates coerenza basata su connettori logici e ripetizione di concetti
         coherence_indicators = [
             'quindi', 'perciò', 'tuttavia', 'inoltre', 'infatti', 'cioè',
             'therefore', 'however', 'moreover', 'furthermore', 'indeed', 'thus'
@@ -311,13 +311,13 @@ class SemanticMetrics:
         indicator_count = sum(1 for word in text.lower().split() 
                              if word in coherence_indicators)
         
-        # Normalizza per la lunghezza del testo
+        # Normalizza for la lunghezza del text
         coherence_score = indicator_count / len(sentences) if sentences else 0
         
         return min(coherence_score, 1.0)
     
     def _calculate_complexity(self, text: str) -> float:
-        """Calcola la complessità sintattica e lessicale."""
+        """Calculates la complessità sintattica e lessicale."""
         words = text.split()
         sentences = text.split('.')
         
@@ -334,14 +334,14 @@ class SemanticMetrics:
         return (sentence_complexity + lexical_complexity) / 2
     
     def _extract_key_concepts(self, text: str, max_concepts: int = 5) -> List[str]:
-        """Estrae i concetti chiave dal testo."""
+        """Estrae i concetti chiave dal text."""
         try:
-            # Usa TF-IDF per identificare i termini più importanti
+            # Usa TF-IDF for identificare i termini più importanti
             tfidf_matrix = self.vectorizer.fit_transform([text])
             feature_names = self.vectorizer.get_feature_names_out()
             tfidf_scores = tfidf_matrix.toarray()[0]
             
-            # Ottiene i termini con punteggio più alto
+            # Ottiene i termini with punteggio più alto
             top_indices = np.argsort(tfidf_scores)[-max_concepts:]
             key_concepts = [feature_names[i] for i in reversed(top_indices) if tfidf_scores[i] > 0]
             
@@ -354,7 +354,7 @@ class SemanticMetrics:
             for word in words:
                 word_freq[word] = word_freq.get(word, 0) + 1
             
-            # Ordina per frequenza (meno frequenti = più importanti) e lunghezza
+            # Ordina for frequenza (meno frequenti = più importanti) e lunghezza
             sorted_words = sorted(word_freq.keys(), 
                                 key=lambda x: (word_freq[x], -len(x)))
             

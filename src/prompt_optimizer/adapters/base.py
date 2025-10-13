@@ -1,9 +1,9 @@
 """
-Classe base per gli adattatori LLM specifici.
+Class base for gli adattatori LLM specifici.
 
-Gli adattatori gestiscono le differenze tra modelli LLM per:
+Gli adattatori gestiscono le differenze tra modelli LLM for:
 - Conteggio token accurato
-- Calcolo dei costi
+- Calcolo dei costs
 - Ottimizzazioni specifiche del modello
 """
 
@@ -14,7 +14,7 @@ from dataclasses import dataclass
 
 @dataclass
 class ModelConfig:
-    """Configurazione per un modello LLM specifico."""
+    """Configurazione for un modello LLM specifico."""
     
     model_name: str
     max_context_length: int
@@ -30,15 +30,15 @@ class ModelConfig:
 
 class LLMAdapter(ABC):
     """
-    Classe base per tutti gli adattatori LLM.
+    Class base for tutti gli adattatori LLM.
     
     Ogni adattatore implementa le funzionalità specifiche
-    per un particolare modello o famiglia di modelli.
+    for un particolare modello o famiglia di modelli.
     """
     
     def __init__(self, config: Optional[ModelConfig] = None):
         """
-        Inizializza l'adattatore LLM.
+        Initializes l'adattatore LLM.
         
         Args:
             config: Configurazione del modello
@@ -49,10 +49,10 @@ class LLMAdapter(ABC):
     @abstractmethod
     def count_tokens(self, text: str) -> int:
         """
-        Conta accuratamente i token per questo modello.
+        Conta accuratamente i token for questo modello.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
             Numero di token
@@ -62,7 +62,7 @@ class LLMAdapter(ABC):
     @abstractmethod
     def calculate_cost(self, input_tokens: int, output_tokens: int = 0) -> float:
         """
-        Calcola il costo per un numero di token.
+        Calculates il cost for un numero di token.
         
         Args:
             input_tokens: Token di input
@@ -76,32 +76,32 @@ class LLMAdapter(ABC):
     @abstractmethod
     def optimize_for_model(self, prompt: str) -> str:
         """
-        Applica ottimizzazioni specifiche per questo modello.
+        Applies ottimizzazioni specifiche for questo modello.
         
         Args:
-            prompt: Prompt da ottimizzare
+            prompt: Prompt from ottimizzare
             
         Returns:
-            Prompt ottimizzato per il modello
+            Prompt ottimizzato for il modello
         """
         pass
     
     @abstractmethod
     def _get_default_config(self) -> ModelConfig:
-        """Restituisce la configurazione di default per il modello."""
+        """Returns la configuration di default for il modello."""
         pass
     
     @abstractmethod
     def _initialize_tokenizer(self):
-        """Inizializza il tokenizer specifico per il modello."""
+        """Initializes il tokenizer specifico for il modello."""
         pass
     
     def calculate_cost_reduction(self, token_reduction: int) -> float:
         """
-        Calcola il risparmio in costi per una riduzione di token.
+        Calculates il risparmio in costs for una reduction di token.
         
         Args:
-            token_reduction: Numero di token risparmiati
+            token_reduction: Numero di tokens saved
             
         Returns:
             Risparmio in USD
@@ -111,10 +111,10 @@ class LLMAdapter(ABC):
     
     def estimate_context_usage(self, prompt: str) -> float:
         """
-        Stima la percentuale di contesto utilizzata dal prompt.
+        Estimates la percentuale di contesto utilizzata dal prompt.
         
         Args:
-            prompt: Prompt da analizzare
+            prompt: Prompt from analizzare
             
         Returns:
             Percentuale di utilizzo del contesto (0.0-1.0)
@@ -124,24 +124,24 @@ class LLMAdapter(ABC):
     
     def can_fit_in_context(self, prompt: str, reserve_tokens: int = 1000) -> bool:
         """
-        Verifica se il prompt può stare nel contesto del modello.
+        Checks if il prompt può stare nel contesto del modello.
         
         Args:
-            prompt: Prompt da verificare
-            reserve_tokens: Token da riservare per la risposta
+            prompt: Prompt from verificare
+            reserve_tokens: Token from riservare for la risposta
             
         Returns:
-            True se il prompt sta nel contesto
+            True if il prompt sta nel contesto
         """
         token_count = self.count_tokens(prompt)
         return token_count + reserve_tokens <= self.config.max_context_length
     
     def get_model_info(self) -> Dict[str, Any]:
         """
-        Restituisce informazioni sul modello.
+        Returns informazioni sul modello.
         
         Returns:
-            Dizionario con informazioni sul modello
+            Dizionario with informazioni sul modello
         """
         return {
             'model_name': self.config.model_name,
@@ -153,13 +153,13 @@ class LLMAdapter(ABC):
     
     def suggest_optimizations(self, prompt: str) -> Dict[str, Any]:
         """
-        Suggerisce ottimizzazioni specifiche per il modello.
+        Suggerisce ottimizzazioni specifiche for il modello.
         
         Args:
-            prompt: Prompt da analizzare
+            prompt: Prompt from analizzare
             
         Returns:
-            Dizionario con suggerimenti di ottimizzazione
+            Dizionario with suggerimenti di optimization
         """
         token_count = self.count_tokens(prompt)
         context_usage = self.estimate_context_usage(prompt)
@@ -183,7 +183,7 @@ class LLMAdapter(ABC):
         if cost > 0.01:  # Più di 1 centesimo
             suggestions['suggestions'].append({
                 'type': 'cost_optimization',
-                'message': f'Costo stimato: ${cost:.4f}. Considera l\'ottimizzazione per ridurre i costi',
+                'message': f'Costo stimato: ${cost:.4f}. Considera l\'optimization for ridurre i costs',
                 'severity': 'medium'
             })
         
@@ -191,33 +191,33 @@ class LLMAdapter(ABC):
     
     def _estimate_tokens_fallback(self, text: str) -> int:
         """
-        Stima fallback del numero di token quando il tokenizer non è disponibile.
+        Estimates fallback del numero di token when il tokenizer non è disponibile.
         
         Args:
-            text: Testo da analizzare
+            text: Testo from analizzare
             
         Returns:
-            Stima approssimativa dei token
+            Estimates approssimativa dei token
         """
-        # Stima basata su caratteristiche generali dei tokenizer
+        # Estimates basata su caratteristiche generali dei tokenizer
         chars_per_token = 4  # Media approssimativa
         return len(text) // chars_per_token
     
     def _clean_text_for_tokenization(self, text: str) -> str:
         """
-        Pulisce il testo prima della tokenizzazione.
+        Pulisce il text prima della tokenizzazione.
         
         Args:
-            text: Testo da pulire
+            text: Testo from pulire
             
         Returns:
             Testo pulito
         """
         # Normalizza spazi multipli
         import re
-        text = re.sub(r'\\s+', ' ', text)
+        text = re.sub(r'\s+', ' ', text)
         
-        # Rimuove spazi iniziali e finali
+        # Removes spazi iniziali e finali
         text = text.strip()
         
         return text

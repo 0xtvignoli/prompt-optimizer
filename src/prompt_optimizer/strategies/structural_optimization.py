@@ -1,6 +1,6 @@
 """
-Strategia di ottimizzazione strutturale che riorganizza
-e ristruttura il prompt per massimizzare l'efficacia LLM.
+Strategy di optimization strutturale che riorganizza
+e ristruttura il prompt for massimizzare l'efficacia LLM.
 """
 
 import re
@@ -10,8 +10,8 @@ from .base import OptimizationStrategy
 
 class StructuralOptimizationStrategy(OptimizationStrategy):
     """
-    Strategia che ottimizza la struttura del prompt per renderlo
-    più efficace per i modelli LLM, migliorando organizzazione e chiarezza.
+    Strategy che optimizes la struttura del prompt for renderlo
+    più efficace for i modelli LLM, migliorando organizzazione e chiarezza.
     
     Tecniche applicate:
     - Riorganizzazione in sezioni logiche
@@ -30,50 +30,50 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
     
     def apply(self, prompt: str) -> str:
         """
-        Applica l'ottimizzazione strutturale al prompt.
+        Applies l'optimization strutturale al prompt.
         
         Args:
-            prompt: Il prompt originale
+            prompt: Il original prompt
             
         Returns:
-            Il prompt ottimizzato strutturalmente
+            Il optimized prompt strutturalmente
         """
         self._validate_prompt(prompt)
         
-        # Step 1: Analizza la struttura esistente
+        # Step 1: Analyzes la struttura esistente
         sections = self._analyze_structure(prompt)
         
         # Step 2: Riorganizza le sezioni in ordine logico
         optimized_sections = self._reorganize_sections(sections)
         
-        # Step 3: Ottimizza il formato di ciascuna sezione
+        # Step 3: Optimizes il formato di ciascuna sezione
         formatted_sections = self._optimize_section_formatting(optimized_sections)
         
         # Step 4: Consolida istruzioni duplicate
         consolidated_sections = self._consolidate_instructions(formatted_sections)
         
-        # Step 5: Applica formattazione finale LLM-friendly
+        # Step 5: Applies formattazione finale LLM-friendly
         final_prompt = self._apply_final_formatting(consolidated_sections)
         
         return final_prompt.strip()
     
     def estimate_reduction(self, prompt: str) -> float:
         """
-        Stima l'impatto dell'ottimizzazione strutturale.
+        Estimates l'impatto dell'optimization strutturale.
         
-        Note: Questa strategia può aumentare o diminuire la lunghezza,
+        Note: Questa strategy può aumentare o diminuire la lunghezza,
         l'obiettivo è migliorare l'efficacia più che ridurre i token.
         
         Args:
-            prompt: Il prompt da analizzare
+            prompt: Il prompt from analizzare
             
         Returns:
-            Stima dell'impatto (può essere negativo se aumenta la lunghezza)
+            Estimates dell'impatto (può essere negativo if aumenta la lunghezza)
         """
         if not self.can_apply(prompt):
             return 0.0
         
-        # Analizza quanto il prompt è già strutturato
+        # Analyzes quanto il prompt è già strutturato
         structure_score = self._calculate_structure_score(prompt)
         duplication_score = self._calculate_duplication_score(prompt)
         formatting_score = self._calculate_formatting_score(prompt)
@@ -82,39 +82,39 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         if structure_score > 0.8:
             return duplication_score * 0.1  # Solo consolidamento duplicati
         
-        # Stima basata su miglioramenti strutturali possibili
-        # Può essere leggermente negativa se aggiungiamo struttura
+        # Estimates basata su miglioramenti strutturali possibili
+        # Può essere leggermente negativa if aggiungiamo struttura
         estimated_impact = (
             (1 - structure_score) * 0.05 +    # Miglioramento struttura
             duplication_score * 0.15 +        # Riduzione duplicazioni
             (1 - formatting_score) * 0.02     # Miglioramento formattazione
-        ) - 0.05  # Overhead per aggiunta struttura
+        ) - 0.05  # Overhead for aggiunta struttura
         
         return estimated_impact
     
     def can_apply(self, prompt: str) -> bool:
         """
-        Verifica se la strategia può migliorare il prompt.
+        Checks if la strategy può migliorare il prompt.
         
         Args:
-            prompt: Il prompt da analizzare
+            prompt: Il prompt from analizzare
             
         Returns:
-            True se applicabile
+            True if applicabile
         """
         if not prompt or len(prompt.strip()) < 50:
             return False
         
-        # Verifica se ci sono miglioramenti strutturali possibili
+        # Checks if ci sono miglioramenti strutturali possibili
         structure_score = self._calculate_structure_score(prompt)
         has_duplications = self._calculate_duplication_score(prompt) > 0.1
         needs_formatting = self._calculate_formatting_score(prompt) < 0.7
         
-        # Applica se la struttura può essere migliorata
+        # Applies if la struttura può essere migliorata
         return structure_score < 0.8 or has_duplications or needs_formatting
     
     def _analyze_structure(self, prompt: str) -> Dict[str, List[str]]:
-        """Analizza e categorizza le parti del prompt in sezioni."""
+        """Analyzes e categorizza le parti del prompt in sezioni."""
         sections = {
             'context': [],
             'instructions': [],
@@ -134,8 +134,8 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return sections
     
     def _reorganize_sections(self, sections: Dict[str, List[str]]) -> Dict[str, List[str]]:
-        """Riorganizza le sezioni in ordine logico per LLM."""
-        # Ordine ottimale per LLM:
+        """Riorganizza le sezioni in ordine logico for LLM."""
+        # Ordine ottimale for LLM:
         # 1. Context (background information)
         # 2. Instructions (what to do)
         # 3. Constraints (what not to do / limitations)
@@ -156,14 +156,14 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return reorganized
     
     def _optimize_section_formatting(self, sections: Dict[str, List[str]]) -> Dict[str, str]:
-        """Ottimizza la formattazione di ciascuna sezione."""
+        """Optimizes la formattazione di ciascuna sezione."""
         formatted_sections = {}
         
         for section_name, content_list in sections.items():
             if not content_list:
                 continue
             
-            # Applica formattazione specifica per tipo di sezione
+            # Applies formattazione specifica for tipo di sezione
             if section_name == 'context':
                 formatted_sections[section_name] = self._format_context_section(content_list)
             elif section_name == 'instructions':
@@ -192,14 +192,14 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return consolidated
     
     def _apply_final_formatting(self, sections: Dict[str, str]) -> str:
-        """Applica la formattazione finale ottimizzata per LLM."""
+        """Applies la formattazione finale ottimizzata for LLM."""
         formatted_parts = []
         
         for section_name, content in sections.items():
             if not content.strip():
                 continue
             
-            # Aggiunge intestazioni chiare per sezioni multiple
+            # Aggiunge intestazioni chiare for sezioni multiple
             if len(sections) > 2:
                 header = self._get_section_header(section_name)
                 if header:
@@ -207,15 +207,15 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
             
             formatted_parts.append(content.strip())
         
-        # Unisce con spaziatura appropriata
+        # Unisce with spaziatura appropriata
         return '\\n\\n'.join(formatted_parts)
     
     def _split_into_paragraphs(self, text: str) -> List[str]:
-        """Divide il testo in paragrafì logici."""
-        # Divisione per doppi a capo, poi per frasi lunghe
+        """Divide il text in paragrafì logici."""
+        # Divisione for doppi a capo, poi for frasi lunghe
         paragraphs = text.split('\\n\\n')
         
-        # Se non ci sono divisioni naturali, dividi per frasi
+        # Se non ci sono divisioni naturali, dividi for frasi
         if len(paragraphs) == 1:
             sentences = re.split(r'[.!?]+', text)
             paragraphs = [s.strip() for s in sentences if s.strip()]
@@ -226,14 +226,14 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         """Classifica un paragrafo in una categoria strutturale."""
         paragraph_lower = paragraph.lower()
         
-        # Keywords per identificare il tipo di sezione
+        # Keywords for identificare il tipo di sezione
         context_keywords = ['background', 'context', 'situation', 'given', 'assume',
                            'scenario', 'setting', 'environment', 'contesto', 'situazione',
                            'dato', 'supponi', 'scenario', 'ambiente']
         
         instruction_keywords = ['please', 'write', 'create', 'generate', 'analyze',
                                'explain', 'describe', 'list', 'identify', 'compare',
-                               'per favore', 'scrivi', 'crea', 'genera', 'analizza',
+                               'for favore', 'scrivi', 'creates', 'genera', 'analyzes',
                                'spiega', 'descrivi', 'elenca', 'identifica', 'confronta']
         
         constraint_keywords = ['do not', 'avoid', 'must not', 'never', 'only',
@@ -242,10 +242,10 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
                               'limita', 'restrizione', 'vincolo', 'requisito']
         
         example_keywords = ['example', 'for instance', 'such as', 'like',
-                           'esempio', 'ad esempio', 'come', 'tipo']
+                           'example', 'ad example', 'how', 'tipo']
         
         format_keywords = ['format', 'output', 'response', 'answer', 'result',
-                          'formato', 'risposta', 'risultato']
+                          'formato', 'risposta', 'result']
         
         # Classifica basandosi sulle keyword presenti
         if any(keyword in paragraph_lower for keyword in context_keywords):
@@ -262,7 +262,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
             return 'other'
     
     def _remove_section_duplicates(self, items: List[str]) -> List[str]:
-        """Rimuove elementi duplicati o molto simili da una sezione."""
+        """Removes elementi duplicati o molto simili from una sezione."""
         unique_items = []
         
         for item in items:
@@ -294,8 +294,8 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         if len(content_list) > 2:
             formatted = []
             for i, instruction in enumerate(content_list, 1):
-                formatted.append(f\"{i}. {instruction.strip('.')}\")
-            return '\\n'.join(formatted)
+                formatted.append(f"{i}. {instruction.strip('.')}")
+            return '\n'.join(formatted)
         else:
             return ' '.join(content_list)
     
@@ -304,27 +304,27 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         if len(content_list) == 1:
             return content_list[0]
         
-        # Lista puntata per constraints multiple
+        # Lista puntata for constraints multiple
         constraints = []
         for constraint in content_list:
             constraint = constraint.strip()
             if not constraint.startswith('-') and not constraint.startswith('•'):
-                constraint = f\"- {constraint}\"
+                constraint = f"- {constraint}"
             constraints.append(constraint)
         
-        return '\\n'.join(constraints)
+        return '\n'.join(constraints)
     
     def _format_examples_section(self, content_list: List[str]) -> str:
-        """Formatta la sezione esempi."""
+        """Formatta la sezione examples."""
         if len(content_list) == 1:
             return content_list[0]
         
-        # Enumera gli esempi
+        # Enumera gli examples
         examples = []
         for i, example in enumerate(content_list, 1):
-            examples.append(f\"Example {i}: {example}\")
+            examples.append(f"Example {i}: {example}")
         
-        return '\\n'.join(examples)
+        return '\n'.join(examples)
     
     def _format_output_section(self, content_list: List[str]) -> str:
         """Formatta la sezione formato output."""
@@ -332,7 +332,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         
         # Assicurati che sia chiaro che si tratta di formato output
         if not any(keyword in content.lower() for keyword in ['format', 'output', 'response']):
-            content = f\"Output format: {content}\"
+            content = f"Output format: {content}"
         
         return content
     
@@ -342,7 +342,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
     
     def _merge_similar_instructions(self, instructions_text: str) -> str:
         """Unisce istruzioni simili o ridondanti."""
-        # Implementazione semplificata - divide per frasi e rimuove duplicati
+        # Implementazione semplificata - divide for frasi e removes duplicati
         sentences = re.split(r'[.!?\\n]+', instructions_text)
         unique_sentences = []
         
@@ -363,7 +363,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return '. '.join(unique_sentences)
     
     def _get_section_header(self, section_name: str) -> Optional[str]:
-        """Ottiene l'intestazione appropriata per una sezione."""
+        """Ottiene l'intestazione appropriata for una sezione."""
         headers = {
             'context': 'Context:',
             'instructions': 'Instructions:',
@@ -374,7 +374,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return headers.get(section_name)
     
     def _calculate_structure_score(self, prompt: str) -> float:
-        """Calcola quanto il prompt è già ben strutturato."""
+        """Calculates quanto il prompt è già ben strutturato."""
         # Fattori che indicano buona struttura:
         # - Presenza di sezioni/intestazioni
         # - Organizzazione logica
@@ -388,7 +388,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return sum(structure_indicators) / len(structure_indicators)
     
     def _calculate_duplication_score(self, prompt: str) -> float:
-        """Calcola il livello di duplicazione nel prompt."""
+        """Calculates il livello di duplicazione nel prompt."""
         sentences = re.split(r'[.!?]+', prompt)
         sentences = [s.strip() for s in sentences if s.strip()]
         
@@ -408,13 +408,13 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return duplications / total_comparisons if total_comparisons > 0 else 0.0
     
     def _calculate_formatting_score(self, prompt: str) -> float:
-        """Calcola la qualità della formattazione."""
+        """Calculates la qualità della formattazione."""
         # Fattori di buona formattazione:
         # - Spaziatura consistente
         # - Punteggiatura corretta
         # - Struttura chiara
         
-        consistent_spacing = not bool(re.search(r'\\s{3,}', prompt))  # No spazi eccessivi
+        consistent_spacing = not bool(re.search(r'\s{3,}', prompt))  # No spazi eccessivi
         proper_punctuation = len(re.findall(r'[.!?]\\s+[A-Z]', prompt)) > 0  # Frasi ben separate
         no_formatting_issues = not bool(re.search(r'[,.!?]{2,}', prompt))  # No punteggiatura doppia
         
@@ -422,7 +422,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return sum(formatting_indicators) / len(formatting_indicators)
     
     def _text_similarity(self, text1: str, text2: str) -> float:
-        """Calcola similarità tra due testi."""
+        """Calculates similarity tra due testi."""
         if not text1 or not text2:
             return 0.0
         
@@ -438,7 +438,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         return len(intersection) / len(union) if union else 0.0
     
     def _load_section_patterns(self) -> Dict[str, List[str]]:
-        """Carica pattern per identificare sezioni."""
+        """Loads pattern for identificare sezioni."""
         return {
             'context': [
                 r'given\\s+that', r'assuming\\s+that', r'in\\s+the\\s+context',
@@ -448,7 +448,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
             ],
             'instructions': [
                 r'please', r'you\\s+(should|must|need\\s+to)', r'instructions?:',
-                r'per\\s+favore', r'devi', r'istruzioni?:'
+                r'for\\s+favore', r'devi', r'istruzioni?:'
             ],
             'constraints': [
                 r'do\\s+not', r'must\\s+not', r'constraints?:', r'requirements?:',
@@ -456,7 +456,7 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
             ],
             'examples': [
                 r'for\\s+example', r'examples?:', r'such\\s+as',
-                r'ad\\s+esempio', r'esempi?:', r'come'
+                r'ad\\s+example', r'examples?:', r'how'
             ],
             'output_format': [
                 r'output\\s+format', r'response\\s+format', r'format:',
@@ -465,16 +465,16 @@ class StructuralOptimizationStrategy(OptimizationStrategy):
         }
     
     def _load_instruction_keywords(self) -> List[str]:
-        """Carica keywords che indicano istruzioni."""
+        """Loads keywords che indicano istruzioni."""
         return [
             'write', 'create', 'generate', 'analyze', 'explain', 'describe',
             'list', 'identify', 'compare', 'evaluate', 'summarize', 'translate',
-            'scrivi', 'crea', 'genera', 'analizza', 'spiega', 'descrivi',
+            'scrivi', 'creates', 'genera', 'analyzes', 'spiega', 'descrivi',
             'elenca', 'identifica', 'confronta', 'valuta', 'riassumi', 'traduci'
         ]
     
     def _load_formatting_rules(self) -> Dict[str, str]:
-        """Carica regole di formattazione."""
+        """Loads regole di formattazione."""
         return {
             'section_separator': '\\n\\n',
             'list_marker': '- ',
