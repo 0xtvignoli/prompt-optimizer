@@ -3,14 +3,14 @@ Configurazione e fixtures condivise for i test.
 """
 
 import pytest
+
 from prompt_optimizer import PromptOptimizer
-from prompt_optimizer.adapters import OpenAIAdapter, ClaudeAdapter
+from prompt_optimizer.adapters import ClaudeAdapter, OpenAIAdapter
 from prompt_optimizer.strategies import (
     SemanticCompressionStrategy,
-    TokenReductionStrategy,
     StructuralOptimizationStrategy,
+    TokenReductionStrategy,
 )
-
 
 # Sample prompts for testing
 SAMPLE_PROMPTS = {
@@ -111,19 +111,13 @@ def claude_adapter():
 @pytest.fixture
 def basic_optimizer(openai_adapter, semantic_strategy):
     """Basic optimizer with una strategy."""
-    return PromptOptimizer(
-        llm_adapter=openai_adapter,
-        strategies=[semantic_strategy]
-    )
+    return PromptOptimizer(llm_adapter=openai_adapter, strategies=[semantic_strategy])
 
 
 @pytest.fixture
 def full_optimizer(openai_adapter, all_strategies):
     """Optimizer with tutte le strategie."""
-    return PromptOptimizer(
-        llm_adapter=openai_adapter,
-        strategies=all_strategies
-    )
+    return PromptOptimizer(llm_adapter=openai_adapter, strategies=all_strategies)
 
 
 @pytest.fixture
@@ -133,5 +127,5 @@ def aggressive_optimizer(openai_adapter, all_strategies):
         llm_adapter=openai_adapter,
         strategies=all_strategies,
         aggressive_mode=True,
-        preserve_meaning_threshold=0.80
+        preserve_meaning_threshold=0.80,
     )

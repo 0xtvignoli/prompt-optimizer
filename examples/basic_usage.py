@@ -18,7 +18,7 @@ def main():
     print("PROMPT OPTIMIZER - Esempio Base")
     print("=" * 60)
     print()
-    
+
     # Prompt originale verboso
     original_prompt = """
     Please could you very kindly take the time to analyze the following 
@@ -28,12 +28,12 @@ def main():
     in a very clear and understandable way. Thank you very much for your 
     help and assistance with this task.
     """
-    
+
     print("PROMPT ORIGINALE:")
     print("-" * 60)
     print(original_prompt.strip())
     print()
-    
+
     # Initializes l'optimizer
     print("Inizializzazione optimizer...")
     adapter = OpenAIAdapter("gpt-4")
@@ -43,23 +43,23 @@ def main():
             SemanticCompressionStrategy(),
             TokenReductionStrategy(),
         ],
-        preserve_meaning_threshold=0.85
+        preserve_meaning_threshold=0.85,
     )
     print("✓ Optimizer inizializzato")
     print()
-    
+
     # Optimizes il prompt
     print("Ottimizzazione in corso...")
     result = optimizer.optimize(original_prompt)
     print("✓ Ottimizzazione completata")
     print()
-    
+
     # Visualizza results
     print("PROMPT OTTIMIZZATO:")
     print("-" * 60)
     print(result.optimized_prompt.strip())
     print()
-    
+
     print("STATISTICHE:")
     print("-" * 60)
     print(f"Token originali:      {result.metadata['original_tokens']}")
@@ -70,24 +70,24 @@ def main():
     print(f"Risparmio costs:      ${result.cost_reduction:.6f}")
     print(f"Tempo optimization: {result.optimization_time:.3f}s")
     print()
-    
+
     print("STRATEGIE APPLICATE:")
     print("-" * 60)
     for strategy in result.strategies_used:
         print(f"✓ {strategy}")
     print()
-    
+
     # Calculates risparmio annuale (example with 1000 richieste/giorno)
     daily_requests = 1000
     annual_savings = result.cost_reduction * daily_requests * 365
-    
+
     print("STIMA RISPARMIO ANNUALE:")
     print("-" * 60)
     print(f"Con {daily_requests} richieste/giorno:")
     print(f"Risparmio giornaliero: ${result.cost_reduction * daily_requests:.2f}")
     print(f"Risparmio annuale:     ${annual_savings:.2f}")
     print()
-    
+
     print("=" * 60)
     print("✓ Esempio completato with successo!")
     print("=" * 60)

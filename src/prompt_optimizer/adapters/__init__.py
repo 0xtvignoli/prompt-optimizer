@@ -8,8 +8,8 @@ Gli adattatori forniscono:
 """
 
 from .base import LLMAdapter, ModelConfig
-from .openai_adapter import OpenAIAdapter
 from .claude_adapter import ClaudeAdapter
+from .openai_adapter import OpenAIAdapter
 
 __all__ = [
     "LLMAdapter",

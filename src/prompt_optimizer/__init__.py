@@ -12,19 +12,19 @@ __version__ = "0.1.0"
 __author__ = "Your Name"
 __email__ = "your.email@example.com"
 
+from .adapters import ClaudeAdapter, OpenAIAdapter
 from .core import PromptOptimizer
-from .metrics import TokenMetrics, SemanticMetrics
-from .adapters import OpenAIAdapter, ClaudeAdapter
+from .metrics import SemanticMetrics, TokenMetrics
 from .strategies import (
     SemanticCompressionStrategy,
-    TokenReductionStrategy,
     StructuralOptimizationStrategy,
+    TokenReductionStrategy,
 )
 
 __all__ = [
     "PromptOptimizer",
     "TokenMetrics",
-    "SemanticMetrics", 
+    "SemanticMetrics",
     "OpenAIAdapter",
     "ClaudeAdapter",
     "SemanticCompressionStrategy",

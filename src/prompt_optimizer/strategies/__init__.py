@@ -7,14 +7,14 @@ Le strategie implementano diverse tecniche for ottimizzare i prompt:
 - Ottimizzazione strutturale
 """
 
-from .base import OptimizationStrategy, OptimizationConfig
+from .base import OptimizationConfig, OptimizationStrategy
 from .semantic_compression import SemanticCompressionStrategy
-from .token_reduction import TokenReductionStrategy
 from .structural_optimization import StructuralOptimizationStrategy
+from .token_reduction import TokenReductionStrategy
 
 __all__ = [
     "OptimizationStrategy",
-    "OptimizationConfig", 
+    "OptimizationConfig",
     "SemanticCompressionStrategy",
     "TokenReductionStrategy",
     "StructuralOptimizationStrategy",
