@@ -131,4 +131,8 @@ Thumbs.db
 
 # Project specific
 *.bak
-.pytest_cache/
+
+# IDE configurations (keep examples, ignore user-specific)
+.cursor/mcp.json
+.vscode/settings.json
+.windsurf/mcp.json

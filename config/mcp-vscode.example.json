@@ -1,0 +1,18 @@
+{
+  "mcp.servers": {
+    "prompt-optimizer": {
+      "command": "uv",
+      "args": [
+        "run",
+        "python",
+        "-m",
+        "src.mcp_server"
+      ],
+      "cwd": "${workspaceFolder}",
+      "env": {
+        "MCP_PROMPT_OPTIMIZER_REPO_PATH": "/path/to/prompt_engineering"
+      }
+    }
+  }
+}
+
