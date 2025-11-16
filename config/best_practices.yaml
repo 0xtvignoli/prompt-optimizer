@@ -1,0 +1,139 @@
+best_practices:
+  context_stacking:
+    description: "Always contextualize the domain before assigning tasks"
+    weight: 10
+    check_patterns:
+      - "context"
+      - "contesto"
+      - "dominio"
+      - "contestualizza"
+      - "ambito"
+      - "settore"
+      - "prima di assegnare"
+  
+  role_responsibility:
+    description: "Declare the role interpreted by the LLM and its associated responsibility"
+    weight: 15
+    check_patterns:
+      - "You are"
+      - "You are a"
+      - "role:"
+      - "responsibility"
+      - "Sei"
+      - "Assumi il ruolo"
+      - "Ruolo:"
+      - "Responsabilità"
+      - "compito"
+      - "responsabile di"
+  
+  verifiable_formats:
+    description: "Verifiable formats: JSON, YAML, and tabular markdown"
+    weight: 10
+    check_patterns:
+      - "output:"
+      - "schema:"
+      - "style: (json|yaml|markdown)"
+      - "formato:"
+      - "json"
+      - "yaml"
+      - "markdown"
+      - "tabellare"
+      - "tabella"
+      - "tabular"
+      - "in formato"
+      - "tipologia:"
+  
+  examples:
+    description: "Positive/negative examples to reduce ambiguity"
+    weight: 5
+    check_patterns:
+      - "example"
+      - "examples"
+      - "do not"
+      - "avoid"
+      - "esempio"
+      - "esempi"
+      - "non fare"
+      - "evita"
+      - "casi positivi"
+      - "casi negativi"
+  
+  citations:
+    description: "Citation management for Perplexity and similar tools"
+    weight: 5
+    check_patterns:
+      - "sources[]"
+      - "references[]"
+      - "citation"
+      - "fonte"
+      - "fonti"
+      - "riferimenti"
+      - "citazione"
+      - "bibliografia"
+      - "origine"
+  
+  toon_format:
+    description: "Modular blocks (role, context, instructions, guardrail, output, checks)"
+    weight: 20
+    required_blocks:
+      - "role"
+      - "context"
+      - "ruolo"
+      - "contesto"
+    optional_blocks:
+      - "instructions"
+      - "guardrail"
+      - "output"
+      - "checks"
+      - "istruzioni"
+      - "regole"
+      - "uscita"
+      - "verifiche"
+
+toon_structure:
+  required_fields:
+    - "version"
+    - "meta"
+    - "blocks"
+    - "versione"
+    - "metadati"
+    - "blocchi"
+  meta_required:
+    - "llm"
+    - "role"
+    - "modello"
+    - "ruolo"
+  block_types:
+    - "system"
+    - "user"
+    - "guardrail"
+    - "sistema"
+    - "utente"
+    - "regola"
+  output_styles:
+    - "markdown"
+    - "json"
+    - "yaml"
+    - "tabellare"
+    - "tabella"
+
+token_limits:
+  gpt-4o:
+    max_input: 128000
+    recommended: 4000
+  claude-3-opus:
+    max_input: 200000
+    recommended: 5000
+  gemini-pro:
+    max_input: 1000000
+    recommended: 8000
+  default:
+    max_input: 100000
+    recommended: 4000
+
+optimization_targets:
+  token_reduction:
+    min_reduction: 0.15
+    max_reduction: 0.30
+  quality_threshold: 0.80
+

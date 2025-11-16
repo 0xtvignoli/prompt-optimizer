@@ -1,0 +1,19 @@
+# Cursor Rules for MCP Prompt Optimizer
+
+## Package Manager
+- Use UV as the main package manager
+- Commands: `uv sync`, `uv run`, `uv add`
+
+## Code Style
+- Follow PEP 8
+- Use type hints
+- Document functions and classes with docstrings
+
+## Testing
+- Tests in `tests/`
+- Use pytest with `uv run pytest`
+
+## MCP Server
+- Main server: `src/mcp_server.py`
+- Tools exposed via decorators `@app.list_tools()` and `@app.call_tool()`
+
